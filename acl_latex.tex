@@ -37,7 +37,7 @@
 %
 % and set <dim> to something 5cm or larger.
 
-\title{Instructions for *ACL Proceedings}
+\title{Kelvi: a “pedagogical” morphological parser to support Tamil literacy}
 
 % Author information can be set in various styles:
 % For several authors from the same institution:
@@ -55,17 +55,19 @@
 %         Author 2 \\ Address line \\ ... \\ Address line \And
 %         Author 3 \\ Address line \\ ... \\ Address line}
 
-\author{First Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  \texttt{email@domain} \\\And
-  Second Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  \texttt{email@domain} \\}
-
+\author{
+ \textbf{Shankhalika Srikanth\textsuperscript{1}},
+ \textbf{Sabrina Yu\textsuperscript{1}},
+ \textbf{Sophia Chan\textsuperscript{1}},
+ \textbf{Madeline Solis de Ovando \textsuperscript{1}},
+ \textbf{Fizza Ahmed \textsuperscript{1}}
+ \\
+ \textsuperscript{1}Independent Researcher,
+ \\
+ \small{
+   \textbf{Correspondence:} \href{mailto:shankhalika.srikanth@alumni.utoronto.ca}{shankhalika.srikanth@alumni.utoronto.ca}
+ }
+}
 %\author{
 %  \textbf{First Author\textsuperscript{1}},
 %  \textbf{Second Author\textsuperscript{1,2}},
@@ -107,9 +109,10 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-This document is a supplement to the general instructions for *ACL authors. It contains instructions for using the \LaTeX{} style files for ACL conferences.
-The document itself conforms to its own specifications, and is therefore an example of what your manuscript should look like.
-These instructions should be used both for papers submitted for review and for final versions of accepted papers.
+In this paper we discuss the development of kelvi.ca, an open source web-based dictionary and morphological parser designed to aid Tamil learners in developing their literacy skills. 
+Tamil is an agglutinative language and heavily suffixal. Existing Tamil dictionaries only carry stems, not conjugated or inflected forms, and for a beginner learner of the language, isolating the stem in an unfamiliar word can be very challenging. 
+Kelvi provides 1) the stem of any input word alongside its definition, and 2) non-technical descriptions of any suffixes that are part of this input, so that learners will gradually start to recognize these suffixes and be able to understand and produce new Tamil words themselves. 
+We also hope to show that Kelvi can be adapted for other languages and has the potential to be a useful pedagogical aid for learner literacy development, especially for agglutinative and/or polysynthetic languages which tend to be otherwise underserved in the mainstream.
 \end{abstract}
 
 \section{Introduction}
