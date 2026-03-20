@@ -117,13 +117,23 @@ We also hope to show that Kelvi can be adapted for other languages and has the p
 
 \section{Introduction}
 
-These instructions are for authors submitting papers to *ACL conferences using \LaTeX. They are not self-contained. All authors must follow the general instructions for *ACL proceedings,\footnote{\url{http://acl-org.github.io/ACLPUB/formatting.html}} and this document contains additional instructions for the \LaTeX{} style files.
-
-The templates include the \LaTeX{} source of this document (\texttt{acl\_latex.tex}),
-the \LaTeX{} style file used to format it (\texttt{acl.sty}),
-an ACL bibliography style (\texttt{acl\_natbib.bst}),
-an example bibliography (\texttt{custom.bib}),
-and the bibliography for the ACL Anthology (\texttt{anthology.bib}).
+Tamil is a Dravidian language spoken primarily in south Asia, with significant global diaspora populations. Overall there number around 80 million Tamil speakers, with nearly 240,000 speakers in Canada alone (Government of Canada, worlddata.info). The diaspora population in Canada largely consists of heritage speakers - that is to say, people who grow up hearing their family speak Tamil, but aren’t necessarily entirely fluent themselves (Polinsky and Kagan, 2007). 
+Two of the main complicating features of Tamil literacy are the language’s heavily diglossic nature and its agglutinative properties. Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. See (1), where a complete utterance is expressed as one word. 
+% insert gloss of Tmail word
+In its written Tamil the higher, formal register is used, where every suffix is phonologically expressed in its entirety. 
+In the colloquial spoken register, however, Tamil words undergo massive phonological reduction, 
+so that many sounds that are fully expressed in the written form of a word aren’t actually pronounced (Annamalai, 2019; Renganathan, 2015). 
+This means that heritage speakers often struggle to recognize the written version of words they have only ever heard in the colloquial spoken register, 
+since the written form “sounds” different from what they’re used to (Renganathan, 2015). 
+Conjugated words don’t appear in standard dictionaries, 
+only their lemmas do (consider how “go” can be found in an English dictionary but “went” wouldn’t be.) 
+Learners then face the “dictionary problem”; to summarize Littell et al. 2017, 
+dictionaries are intended to be a tool for language learners, but paradoxically require knowledge of the language to use; 
+in this case, knowledge of what the “dictionary form” or lemma of an unfamiliar word is. 
+The tool we built, kelvi.ca, is a dictionary and morphological parser that helps the learner who comes 
+across an intimidatingly long Tamil word see how the word is broken down, and what each “part” (morpheme) means 
+in layman terms, so that they come away with a fuller understanding of the word while hopefully also starting to 
+recognize Tamil morphological patterns themselves.
 
 \section{Engines}
 
