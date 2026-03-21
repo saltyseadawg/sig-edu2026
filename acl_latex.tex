@@ -117,23 +117,42 @@ We also hope to show that Kelvi can be adapted for other languages and has the p
 
 \section{Introduction}
 
-Tamil is a Dravidian language spoken primarily in south Asia, with significant global diaspora populations. Overall there number around 80 million Tamil speakers, with nearly 240,000 speakers in Canada alone (Government of Canada, worlddata.info). The diaspora population in Canada largely consists of heritage speakers - that is to say, people who grow up hearing their family speak Tamil, but aren’t necessarily entirely fluent themselves (Polinsky and Kagan, 2007). 
-Two of the main complicating features of Tamil literacy are the language’s heavily diglossic nature and its agglutinative properties. Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. See (1), where a complete utterance is expressed as one word. 
+Tamil is a Dravidian language spoken primarily in south Asia, with significant global diaspora populations. 
+Overall there number around 80 million Tamil speakers, with nearly 240,000 speakers in Canada alone (\citealp{government_of_canada_language_2025}, worlddata.info). 
+The diaspora population in Canada largely consists of heritage speakers - that is to say, people who grow up hearing their family speak Tamil, but aren’t necessarily entirely fluent themselves \citep{polinsky_heritage_2007}. 
+Two of the main complicating features of Tamil literacy are the language’s heavily diglossic nature and its agglutinative properties. 
+Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. 
+See (1), where a complete utterance is expressed as one word. 
 % insert gloss of Tmail word
 In its written Tamil the higher, formal register is used, where every suffix is phonologically expressed in its entirety. 
 In the colloquial spoken register, however, Tamil words undergo massive phonological reduction, 
-so that many sounds that are fully expressed in the written form of a word aren’t actually pronounced (Annamalai, 2019; Renganathan, 2015). 
+so that many sounds that are fully expressed in the written form of a word aren’t actually pronounced (\citealp{annamalai_modern_2019}; \citealp{renganathan_heritage_2015}). 
 This means that heritage speakers often struggle to recognize the written version of words they have only ever heard in the colloquial spoken register, 
-since the written form “sounds” different from what they’re used to (Renganathan, 2015). 
+since the written form “sounds” different from what they’re used to \citep{renganathan_heritage_2015}. 
 Conjugated words don’t appear in standard dictionaries, 
 only their lemmas do (consider how “go” can be found in an English dictionary but “went” wouldn’t be.) 
-Learners then face the “dictionary problem”; to summarize Littell et al. 2017, 
+Learners then face the “dictionary problem”; to summarize \citet{littell_waldayu_2017}, 
 dictionaries are intended to be a tool for language learners, but paradoxically require knowledge of the language to use; 
 in this case, knowledge of what the “dictionary form” or lemma of an unfamiliar word is. 
 The tool we built, kelvi.ca, is a dictionary and morphological parser that helps the learner who comes 
 across an intimidatingly long Tamil word see how the word is broken down, and what each “part” (morpheme) means 
 in layman terms, so that they come away with a fuller understanding of the word while hopefully also starting to 
 recognize Tamil morphological patterns themselves.
+
+\section{Literature Review}
+The one specific instance known to these authors of a dictionary specifically designed for a heritage/minoritized 
+language that also provides pedagogical information about morphology is the ongoing work on the 
+digital Wendat Dictionary \citep{lukaniec_modern_2023}. 
+More broadly speaking, there are several open-source technologies that have been developed to 
+support language revitalization and maintenance efforts \citep{brinklow_indigenous_nodate}, 
+such as the dictionary-builder Mother Tongues \citep{littell_waldayu_2017} and the 
+morphological generator Gramble \citep{littell_gramble_2024}. 
+For Tamil specifically there exist technical and/or academic tools such as a lemmatizer \citep{qi2020stanza}, 
+a morphological analyser \citep{sarveswaran_thamizhimorph_2021},  and a stemmer \citep{rajalingam_rdamodharantamil-stemmer_2025}, as well as some 
+pedagogical resources like a dictionary of Tamil verbs \citep{schiffman_english_2009} and a few 
+isolated courses/course materials (\citealp{annamalai_colloquial_2002}, \citealp{prasad_tamil_2025}, \citealp{cheran_learn_2001}); 
+but to the authors’ knowledge there is currently no freely available online resource that employs Tamil NLP, 
+specifically morphological analysis, for the purpose of pedagogy.
 
 \section{Engines}
 
@@ -300,19 +319,19 @@ with other style files.
 
 \nocite{Ando2005,andrew2007scalable,rasooli-tetrault-2015}
 
-The \LaTeX{} and Bib\TeX{} style files provided roughly follow the American Psychological Association format.
-If your own bib file is named \texttt{custom.bib}, then placing the following before any appendices in your \LaTeX{} file will generate the references section for you:
-\begin{quote}
-\begin{verbatim}
-\bibliography{custom}
-\end{verbatim}
-\end{quote}
+% The \LaTeX{} and Bib\TeX{} style files provided roughly follow the American Psychological Association format.
+% If your own bib file is named \texttt{custom.bib}, then placing the following before any appendices in your \LaTeX{} file will generate the references section for you:
+% \begin{quote}
+% \begin{verbatim}
+% \bibliography{custom}
+% \end{verbatim}
+% \end{quote}
 
 You can obtain the complete ACL Anthology as a Bib\TeX{} file from \url{https://aclweb.org/anthology/anthology.bib.gz}.
 To include both the Anthology and your own .bib file, use the following instead of the above.
 \begin{quote}
 \begin{verbatim}
-\bibliography{anthology,custom}
+\bibliography{custom}
 \end{verbatim}
 \end{quote}
 
