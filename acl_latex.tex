@@ -159,26 +159,260 @@ In accordance with principles behind collaborative community based research \cit
 we involved target users early on in our explorations of the problem space to ensure we were 1) Solving a real issue faced by Tamil learners and 2) Providing a solution that learners would want to adopt. 
 We wanted to understand what bottlenecks users were currently facing when searching for Tamil word definitions as well as existing paint points they were experiencing. 
 
+\subsection{Prototype}
+We built a medium fidelity prototype in Figma to test our design. 
+We wanted to know whether a) users would be able to determine the meaning 
+of a word when presented with the morphological breakdown and if 
+b) users found the morphological breakdown useful and 
+c) if users would use the tool if it existed.
 
-\section{Engines}
+\subsection{Participants}
+To determine our design requirements, we interviewed 10 Tamil speakers 
+who were asked to self describe Tamil language abilities in terms of oral fluency and literacy. 
+Of our participants, 3 were native speakers, 6 were heritage speakers, and one was an L2 learner 
+with no Tamil background. Importantly, oral fluency and literacy were not correlated for our speakers. 
+In other words, speakers that were fluent in Tamil were not necessarily strong readers. 
+As shown in (2), most of the participants had stronger oral abilities compared to reading and writing. 
 
-To produce a PDF file, pdf\LaTeX{} is strongly recommended (over original \LaTeX{} plus dvips+ps2pdf or dvipdf).
-The style file \texttt{acl.sty} can also be used with
-lua\LaTeX{} and
-Xe\LaTeX{}, which are especially suitable for text in non-Latin scripts.
-The file \texttt{acl\_lualatex.tex} in this repository provides
-an example of how to use \texttt{acl.sty} with either
-lua\LaTeX{} or
-Xe\LaTeX{}.
+\subsection{Exploratory Interview}
+At the beginning of the session, participants were asked to self-describe their 
+Tamil oral and literacy abilities. In addition, since most of the participants were heritage speakers, 
+they were also asked demographic and language related questions to gain insight into their Tamil proficiency. 
+As described by \citet{montrul_heritage_2016}, background information, 
+such as level of education, language of instruction, domains of use of their languages, etc., 
+is important to understanding a heritage speaker’s ability in their heritage language.
+Although the answers to these questions were mostly used to corroborate the 
+responder’s self description of their Tamil abilities and not used for any formal analyses, 
+the questions themselves have been included in the appendix for future researchers. 
+\\
+Users were then asked to complete five tasks to test the usability of the prototype’s UI as well as input methods, 
+which can also be found in the appendices.  
 
-\section{Preamble}
+After completion of the tasks, users were asked the following questions:
+\begin{itemize}
+  \item What do you like/dislike about this tool?
+  \item What features do you wish existed?
+  \item How did each input method compare?
+  \item How did the prototype compare to how you were originally looking up Tamil word definitions in the first task?
+  \item Would you use this tool?
+\end{itemize}
 
-The first line of the file must be
-\begin{quote}
-\begin{verbatim}
-\documentclass[11pt]{article}
-\end{verbatim}
-\end{quote}
+\subsection{Interview Results}
+\textbf{Task 1:}\\
+During the exploratory interviews, participants were asked what tools they were currently using when looking 
+up the meaning of Tamil words. The most common answer given was Google Translate, 
+however not all participants were using it just to get the translation of a word. 
+For example, L, who had strong oral abilities but could not read Tamil easily, 
+used Google Translate’s TTS feature to hear the word and would then be able to figure out what it meant. 
+On the other hand, IP would use Google Translate to get a Tamil word’s romanization which they would 
+then input into the Google search engine to try to find different contexts and uses of the word. 
+For the participants who did rely on the translation provided by Google Translate, 
+a couple Interestingly, none of our participants mentioned using generative AI tools,
+however this could be due to the fact that most of our participants were over the age of twenty-five. 
+As \citet{MAGOTRA201681} notes, younger individuals are more likely to 
+adopt new technologies compared to older individuals.
+\\
+When asked if they would use this tool, seven participants responded with yes, two responded with no, and one with maybe.  
+%insert image
+SM, who is fluent with weak literacy skills, stated they would not use the tool. 
+TB, who is a beginner heritage speaker that cannot read, stated the reason behind 
+their “maybe” response was because they felt that their level of Tamil was 
+too low to use the tool, but would use it if it included more conversational words. 
+IP, who is fluent and native, felt the tool was unnecessary and that the 
+interface made it hard to correlate meaning with the word parts.
+\\
+Conversely, the other participants felt that the tool was quite useful. 
+In N’s case, they thought that learners would find the pedagogical 
+breakdown helpful and wished the tool existed then they were attending 
+Tamil language class during their adolescence. D, who self-described as 
+conversationally fluent, thought that the pedagogical breakdown was 
+not only helpful, but also corrects errors made by Google Translate. 
+Lastly, R, who had only recently started learning Tamil thought that 
+the definitions provided by the tool were clearer than Google Translate.
+
+\section{User Requirements}
+Based on the results of the exploratory interviews, we established the 
+following user requirements to guide the design of the website. 
+We also drew inspiration from the Kawennon:nis ´ verb conjugator for 
+Kanyen'keha \citep{kazantseva_kawennonnis_2018} and its aim to 
+assist users in acquiring morphology patterns rather than 
+arbitrarily memorizing definitions of Tamil words. 
+\begin{enumerate}
+  \item Intuitively understand the morphological breakdown even as an L2 learner.
+  \item Not overwhelm a beginner learner. 
+  \item Is accessible on the phone. 
+\end{enumerate}
+
+\section{Systems Design}
+\subsection{Romanized/Tamil Input}
+% Users can input using the Tamil script or romanization (i.e., கேள்வி or kelvi). 
+All of the dictionary and morphological data is stored in the Tamil script, 
+so if a user inputs using romanization, their input is first converted into 
+the Tamil script using a romanization-to-Tamil mapping written using 
+G2P \citep{pine_gi2pi_2022} before being processed. 
+Since there is no universal romanization standard followed by Tamil speakers, 
+our mapping simply attempts to capture the most commonly used spelling patterns. 
+After processing, the output is then returned to the user in both the 
+Tamil script and romanization. The romanization presented here is derived 
+from a Tamil-to-romanization mapping, again written using G2P. 
+The romanization system used here is a combination of commonly used 
+spelling conventions and IPA.
+
+\subsection{Lemmatization}
+Where possible, lemmatization of the Tamilinput is performed using 
+Stanza \citep{qi2020stanza}. The output lemma is then checked 
+against the dictionary data to see if it is an existing headword. 
+If no valid dictionary entry is found, other strategies are 
+employed to identify the lemma, such as suffix matching.
+
+\subsection{Suffix Matching}
+Where a valid lemma is not found by the lemmatizer, 
+suffix matching is performed. First, a backwards search is 
+performed on the input to see if there is a match with any
+suffix included in the Gramble JSON file. If there are multiple matches, 
+the longest one is selected. We create a new potential lemma by 
+removing the text of the matched suffix from the input word. 
+If the potential lemma is a valid lemma, we return this alongside the 
+suffix as the output to the user. If the potential lemma is not a valid lemma, 
+we check if the suffix that we found in the Gramble JSON has any 
+material in its “add-back” field: this field contains phonological 
+information that needs to be added to a stem in order to turn it into a lemma. 
+If the “add-back” field is non-empty, we add this material to the potential lemma, 
+confirm if this is now a valid lemma, and return it. If this strategy also fails, 
+we return a “word not found” error to the user.
+
+\subsection{Datasets}
+We used two open source datasets for the Tamil dictionary component, specifically 
+\citet{ylonen_wiktextract_2022} and \citet{vasuki_dharma_nodate}.
+
+\subsection{Suffix Database Generation}
+
+The suffix database queried by the system was created using Gramble. 
+Documentation for Gramble can be found here: https://nrc-cnrc.github.io/gramble/; 
+in this section we limit discussion to what tiers (that are then converted into JSON attributes) 
+we created for suffix generation and why. All attributes are string type.
+The primary attributes that every suffix entry in the suffix database have are 
+\textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
+as it appears in an input word, and is the attribute that the input is 
+matched against as described in the system design walkthrough (section). 
+% For instance, the input பூதங்கள் boothangaL ‘ghosts’ would match to the 
+% suffix ங்கள் ngaL, as shown in Figure. 
+\textit{gloss} is a layman’s definition of this suffix.
+\textit{Display} is the version of the matched suffix that is shown to the user: 
+% this is generally the same as what is in text, but differs in situations 
+% where a suffix undergoes minor changes based on phonological environment. 
+% For example, the plural suffix கள் gaL can also also appear as க்கள் kkaL or 
+% ங்கள் ngaL based on the sound it is preceded by, but since கள் is its 
+%  form, this is the form of the suffix that is shown (“displayed”) to the 
+%  user in all cases, as shown in Figure. Finally, add-back is used as a 
+%  secondary lemmatizer when the primary fails, as detailed above in section. 
+%  In this instance, if the lemmatizer were unable to parse பூதங்கள், 
+%  once the suffix match ங்கள் was identified and removed from the input, 
+%  the character ம் (m) would then be “added back” to this new form to create 
+%  the valid lemma பூதம் bootham (‘ghost’). 
+
+\section{Results}
+\subsection{Systems Analysis}
+Due to limited resources and time (see Limitations chapter), 
+we have not yet been able to perform a formal statistical evaluation. 
+The minimal test set that was used to evaluate performance so far is 
+composed of “edge-case” words, or words we predicted may be tricky to 
+parse based on how our model is constructed. For instance, during early 
+development, we noticed that the Stanford NLP lemmatizer often fails on 
+class III verbs (as defined in Arden 1910), so we made sure to explicitly 
+compensate for this during the suffix generation process using Gramble, 
+and included several words from this category as part of our testing. 
+Since we observed the remaining four verb classes \citep{arden_progressive_1910} being 
+accurately lemmatized, fewer of these are represented in our test set 
+as they were assumed to be higher performing. Similarly, there is a 
+higher proportion of words with complex morphophonology and suffixal 
+combinations present in our test set than is necessarily representative 
+of the language, as we predicted these words to be the most challenging 
+to cover. Thus, many “simple” words, for example words of the 
+form [lemma + tense + person-number-gender], are not included in the test set, 
+as once we confirmed that a sample few were working, we assumed others of the 
+type would also be relatively high performing. Of course, formalized 
+random testing is required to verify this. A high level overview of the 
+tool’s performance on this test set is shown in table 1.
+We primarily tested for presence of lemmas in our dictionary data (shown in table 2), 
+and accurate lemmatization and suffix identification (shown in table 3). 
+For inputs that produced a “word not found” error, we isolated which were 
+failing because the lemma itself was not present in our dictionary data, 
+and which were failing because our tool was not able to lemmatize the word, 
+as shown in Table 4. This delineation will help us isolate which types of 
+structures need to be added to our suffix database. 
+A major category of words that are currently missing is lexical compounds. 
+These are words that have two lemmas, which our model does not currently account for. 
+% Some lexemes commonly used in compounds like போது po:thu (‘when’, colloquially) 
+can be added to the database as suffixes, but Tamil also has a 
+productive process of forming novel compounds, that will require a more nuanced approach.
+For inputs that produced incorrect outputs, we differentiated between 
+whether the error was in the lemma, the suffix, or both (table 5). 
+The results from tables 4 and 5 in particular highlight that more 
+work can be done in improving the suffix database, both to increase 
+the accuracy and quantity of suffixes identified, as well as to assist 
+in the lemmatization process. Thus this is where the focus of our future work lies.
+
+\subsection{User Feedback}
+We conducted a workshop for the launch of the MVP for Kelvi to 
+gather user feedback. We also elicited feedback through word-of-mouth, 
+and online through Reddit forums such as r/Tamil and r/LearningTamil. 
+The feedback received was largely positive. Users requested voice input, 
+romanization input, including example sentences in the output, and 
+providing the definition of the input word in its entirety 
+(not just of the individual morphemes). We were able to add the 
+feature of romanization input following this feedback, and are 
+evaluating the feasibility of incorporating the other requested features.
+
+\section{Discussion}
+Our current bottlenecks and proposed improvements to the software can be summarized as follows:
+\begin{enumerate}
+  \item We have limited root-word (i.e., dictionary) data, and results can be improved if we are able to acquire more data. 
+  \item The lemmatizer that we use fails on some inputs; as discussed in (section), we are compensating for these gaps using Gramble, which we will continue to do. 
+  \item Some morphemes are homophonous; for example, the suffix -um on a verb means “it will”, but on a noun means “and”. Currently we return both definitions, but if we are able to acquire reliable part-of-speech data, we can refine the output returned to the user. 
+  \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine_zero-shot_2025}, \citealp{littell_waldayu_2017}).
+  \item Since Kelvi was primarily designed to capture written forms, words in the spoken/informal register are underrepresented. Since these words vary widely across a range of dialects, collaboration with speakers across this span of variation would greatly enhance the coverage of our tool.
+\end{enumerate}
+
+\section{Conclusion}
+Although Tamil has a relatively large speaker population, it is still considered a 
+low-resource language which adds a layer of difficulty when developing digital tools 
+and resources for Tamil that make use of data driven innovations in 
+computational linguistics \citep{noauthor_tamil_2025} 
+%(Tissera 2025). 
+The system described in this paper serves as a starting point for 
+creating pedagogical dictionaries designed for learners of 
+polysynthetic languages and the morphological challenges they 
+commonly face \citep{kazantseva_kawennonnis_2018}. 
+Although there is room for improvement in terms of coverage and accuracy, 
+we hope that Kelvi serves as an example of a grassroots initiative that, 
+despite limitations in terms of language data and resources, 
+is able to create a useful language learning tool by 
+taking a user centered approach and targeting common pain points 
+experienced by learners. The code and data used for the project 
+is open source and will hopefully benefit other individuals and 
+organizations looking to create language learning resources. 
+
+
+% \section{Engines}
+
+% To produce a PDF file, pdf\LaTeX{} is strongly recommended (over original \LaTeX{} plus dvips+ps2pdf or dvipdf).
+% The style file \texttt{acl.sty} can also be used with
+% lua\LaTeX{} and
+% Xe\LaTeX{}, which are especially suitable for text in non-Latin scripts.
+% The file \texttt{acl\_lualatex.tex} in this repository provides
+% an example of how to use \texttt{acl.sty} with either
+% lua\LaTeX{} or
+% Xe\LaTeX{}.
+
+% \section{Preamble}
+
+% The first line of the file must be
+% \begin{quote}
+% \begin{verbatim}
+% \documentclass[11pt]{article}
+% \end{verbatim}
+% \end{quote}
 
 To load the style file in the review version:
 \begin{quote}
