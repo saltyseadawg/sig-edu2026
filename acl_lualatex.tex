@@ -9,7 +9,8 @@
 % This is not strictly necessary, and may be commented out,
 % but it will improve the layout of the manuscript,
 % and will typically save some space.
- \usepackage{microtype}
+\usepackage{microtype}
+\usepackage{covington}
 
 % If the title and author information does not fit in the area allocated, uncomment the following
 %
@@ -92,6 +93,24 @@ Two of the main complicating features of Tamil literacy are the language’s hea
 Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. 
 See (1), where a complete utterance is expressed as one word. 
 % insert gloss of Tmail word
+% \begin{table}
+%   \centering
+%   \begin{tabular}{lccc}
+%     \foreignlanguage{tamil}{பெரியவர்களுடனா}\\
+%     \foreignlanguage{tamil}{பெரியவர்} & \foreignlanguage{tamil}{கள்} & \foreignlanguage{tamil}{ுடன்} & \foreignlanguage{tamil}{ா} \\
+%     periyavar & kaḷ & uṭan & a:\\
+%     elder & plural & with & interrogative \\
+%     \textit{with the elders?} \\
+%   \end{tabular}
+%     % \caption{Example commands for accented characters, to be used in, \emph{e.g.}, Bib\TeX{} entries.}
+%   \label{tab:elders}
+% \end{table}
+\begin{example}
+  \expreamble{\foreignlanguage{tamil}{பெரியவர்களுடனா}}
+  \digloss{\foreignlanguage{tamil}{பெரியவர்} \foreignlanguage{tamil}{கள்} \foreignlanguage{tamil}{ுடன்} \foreignlanguage{tamil}{ா}}
+    {periyavar kaḷ uṭan a:}
+    {with the elders?}
+\end{example}
 In its written Tamil the higher, formal register is used, where every suffix is phonologically expressed in its entirety. 
 In the colloquial spoken register, however, Tamil words undergo massive phonological reduction, 
 so that many sounds that are fully expressed in the written form of a word aren’t actually pronounced (\citealp{annamalai_modern_2019}; \citealp{renganathan_heritage_2015}). 
