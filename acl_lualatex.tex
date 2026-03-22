@@ -87,24 +87,11 @@ We also hope to show that Kelvi can be adapted for other languages and has the p
 
 \section{Introduction}
 Tamil is a Dravidian language spoken primarily in south Asia, with significant global diaspora populations. 
-Overall there number around 80 million Tamil speakers, with nearly 240,000 speakers in Canada alone (\citealp{government_of_canada_language_2025}, worlddata.info). 
+Overall there number around 80 million Tamil speakers, with nearly 240,000 speakers in Canada alone (\citealp{government_of_canada_language_2025}, \citealp{noauthor_tamil_2025}). 
 The diaspora population in Canada largely consists of heritage speakers - that is to say, people who grow up hearing their family speak Tamil, but aren’t necessarily entirely fluent themselves \citep{polinsky_heritage_2007}. 
 Two of the main complicating features of Tamil literacy are the language’s heavily diglossic nature and its agglutinative properties. 
 Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. 
 See (1), where a complete utterance is expressed as one word. 
-% insert gloss of Tmail word
-% \begin{table}
-%   \centering
-%   \begin{tabular}{lccc}
-%     \foreignlanguage{tamil}{பெரியவர்களுடனா}\\
-%     \foreignlanguage{tamil}{பெரியவர்} & \foreignlanguage{tamil}{கள்} & \foreignlanguage{tamil}{ுடன்} & \foreignlanguage{tamil}{ா} \\
-%     periyavar & kaḷ & uṭan & a:\\
-%     elder & plural & with & interrogative \\
-%     \textit{with the elders?} \\
-%   \end{tabular}
-%     % \caption{Example commands for accented characters, to be used in, \emph{e.g.}, Bib\TeX{} entries.}
-%   \label{tab:elders}
-% \end{table}
 \begin{example}
   \expreamble{\foreignlanguage{tamil}{பெரியவர்களுடனா}}
   \digloss{\foreignlanguage{tamil}{பெரியவர்} \foreignlanguage{tamil}{கள்} \foreignlanguage{tamil}{ுடன்} \foreignlanguage{tamil}{ா}}
@@ -232,7 +219,7 @@ arbitrarily memorizing definitions of Tamil words.
 
 \section{Systems Design}
 \subsection{Romanized/Tamil Input}
-% Users can input using the Tamil script or romanization (i.e., கேள்வி or kelvi). 
+Users can input using the Tamil script or romanization (i.e., \foreignlanguage{tamil}{கேள்வி} or \textit{kelvi}). 
 All of the dictionary and morphological data is stored in the Tamil script, 
 so if a user inputs using romanization, their input is first converted into 
 the Tamil script using a romanization-to-Tamil mapping written using 
@@ -282,20 +269,20 @@ The primary attributes that every suffix entry in the suffix database have are
 \textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
 as it appears in an input word, and is the attribute that the input is 
 matched against as described in the system design walkthrough (section). 
-For instance, the input \foreignlanguage{tamil}{பூதங்கள்} boothangaL ‘ghosts’ would match to the 
-suffix \foreignlanguage{tamil}{ங்கள்} ngaL, as shown in Figure. \textit{gloss} is a layman’s definition of this suffix.
+For instance, the input \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} ‘ghosts’ would match to the 
+suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure. \textit{gloss} is a layman’s definition of this suffix.
 \textit{Display} is the version of the matched suffix that is shown to the user: 
 this is generally the same as what is in text, but differs in situations 
 where a suffix undergoes minor changes based on phonological environment\footnote{Using linguistic terminology, \textit{text} and \textit{display} can roughly be equated to \textit{surface form} and \textit{underlying representation} respectively.}. 
-For example, the plural suffix \foreignlanguage{tamil}{கள்} gaL can also also appear as \foreignlanguage{tamil}{க்கள்} kkaL or 
-\foreignlanguage{tamil}{ங்கள்} ngaL based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its 
+For example, the plural suffix \foreignlanguage{tamil}{கள்} \textit{gaL} can also also appear as \foreignlanguage{tamil}{க்கள்} \textit{kkaL} or 
+\foreignlanguage{tamil}{ங்கள்} \textit{ngaL} based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its 
 form, this is the form of the suffix that is shown (“displayed”) to the 
 user in all cases, as shown in Figure. Finally, add-back is used as a 
 secondary lemmatizer when the primary fails, as detailed above in section. 
 In this instance, if the lemmatizer were unable to parse \foreignlanguage{tamil}{பூதங்கள்}, 
 once the suffix match \foreignlanguage{tamil}{ங்கள்} was identified and removed from the input, 
 the character \foreignlanguage{tamil}{ம்} (m) would then be “added back” to this new form to create 
-the valid lemma \foreignlanguage{tamil}{பூதம்} bootham (‘ghost’). 
+the valid lemma \foreignlanguage{tamil}{பூதம்} \textit{bootham} (‘ghost’). 
 
 \section{Results}
 \subsection{Systems Analysis}
@@ -329,7 +316,7 @@ as shown in Table 4. This delineation will help us isolate which types of
 structures need to be added to our suffix database. 
 A major category of words that are currently missing is lexical compounds. 
 These are words that have two lemmas, which our model does not currently account for. 
-% Some lexemes commonly used in compounds like போது po:thu (‘when’, colloquially) 
+Some lexemes commonly used in compounds like \foreignlanguage{tamil}{போது} \textit{po:thu} (‘when’, colloquially) 
 can be added to the database as suffixes, but Tamil also has a 
 productive process of forming novel compounds\footnote{For example, the poetic word \foreignlanguage{tamil}{கண்ணுறங்கா} \textit{kaNNuRanga}: ‘(as) (my) eyes sleep’ is composed of the lemmas \foreignlanguage{tamil}{கண்} \textit{kaN} ‘eye’ and \foreignlanguage{tamil}{உறங்கு} \textit{uRangu} ‘to sleep’, neither of which can be classified as “commonly” used in compounds.}, that will require a more nuanced approach.
 For inputs that produced incorrect outputs, we differentiated between 
