@@ -267,7 +267,7 @@ For instance, the input \foreignlanguage{tamil}{பூதங்கள்} bootha
 suffix \foreignlanguage{tamil}{ங்கள்} ngaL, as shown in Figure. \textit{gloss} is a layman’s definition of this suffix.
 \textit{Display} is the version of the matched suffix that is shown to the user: 
 this is generally the same as what is in text, but differs in situations 
-where a suffix undergoes minor changes based on phonological environment. 
+where a suffix undergoes minor changes based on phonological environment\footnote{Using linguistic terminology, \textit{text} and \textit{display} can roughly be equated to \textit{surface form} and \textit{underlying representation} respectively.}. 
 For example, the plural suffix \foreignlanguage{tamil}{கள்} gaL can also also appear as \foreignlanguage{tamil}{க்கள்} kkaL or 
 \foreignlanguage{tamil}{ங்கள்} ngaL based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its 
 form, this is the form of the suffix that is shown (“displayed”) to the 
@@ -312,7 +312,7 @@ A major category of words that are currently missing is lexical compounds.
 These are words that have two lemmas, which our model does not currently account for. 
 % Some lexemes commonly used in compounds like போது po:thu (‘when’, colloquially) 
 can be added to the database as suffixes, but Tamil also has a 
-productive process of forming novel compounds, that will require a more nuanced approach.
+productive process of forming novel compounds\footnote{For example, the poetic word \foreignlanguage{tamil}{கண்ணுறங்கா} \textit{kaNNuRanga}: ‘(as) (my) eyes sleep’ is composed of the lemmas \foreignlanguage{tamil}{கண்} \textit{kaN} ‘eye’ and \foreignlanguage{tamil}{உறங்கு} \textit{uRangu} ‘to sleep’, neither of which can be classified as “commonly” used in compounds.}, that will require a more nuanced approach.
 For inputs that produced incorrect outputs, we differentiated between 
 whether the error was in the lemma, the suffix, or both (table 5). 
 The results from tables 4 and 5 in particular highlight that more 
@@ -337,7 +337,7 @@ Our current bottlenecks and proposed improvements to the software can be summari
   \item We have limited root-word (i.e., dictionary) data, and results can be improved if we are able to acquire more data. 
   \item The lemmatizer that we use fails on some inputs; as discussed in (section), we are compensating for these gaps using Gramble, which we will continue to do. 
   \item Some morphemes are homophonous; for example, the suffix -um on a verb means “it will”, but on a noun means “and”. Currently we return both definitions, but if we are able to acquire reliable part-of-speech data, we can refine the output returned to the user. 
-  \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine_zero-shot_2025}, \citealp{littell_waldayu_2017}).
+  \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping\footnote{In fact, it is impossible. This is because the letter “n” can be mapped to \foreignlanguage{tamil}{ண}, \foreignlanguage{tamil}{ந}, or \foreignlanguage{tamil}{ன}. \foreignlanguage{tamil}{ண} is pronounced differently from \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} and so can be mapped to a distinct romanized character like “N”, but \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} are pronounced the same. They can’t usefully be mapped to distinct romanized characters because even though they appear in complementary phonological environments 90\% of the time, the remaining 10\% the distinction is lexically determined, i.e. unpredictable from just the pronunciation, and therefore not something a user who can’t read the Tamil script would be able to know.}, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine_zero-shot_2025}, \citealp{littell_waldayu_2017}).
   \item Since Kelvi was primarily designed to capture written forms, words in the spoken/informal register are underrepresented. Since these words vary widely across a range of dialects, collaboration with speakers across this span of variation would greatly enhance the coverage of our tool.
 \end{enumerate}
 
