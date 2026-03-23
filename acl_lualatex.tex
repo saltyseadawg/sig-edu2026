@@ -243,7 +243,7 @@ In this section we discuss the different components of Kelvi and how they intera
   \caption{Diagram of Kelvi's backend and frontend.}
   \label{fig:sys-diagram}
 \end{figure}
-\subsection{Romanized/Tamil Input}
+\subsection{Romanized/Tamil Input} \label{sec:romanization}
 Users can input using the Tamil script or romanization (i.e., \foreignlanguage{tamil}{கேள்வி} or \textit{kelvi}). 
 All of the dictionary and morphological data is stored in the Tamil script, 
 so if a user inputs using romanization, their input is first converted into 
@@ -459,7 +459,7 @@ Our current bottlenecks and proposed improvements to the software can be summari
 Although Tamil has a relatively large speaker population, it is still considered a 
 low-resource language which adds a layer of difficulty when developing digital tools 
 and resources for Tamil that make use of data driven innovations in 
-computational linguistics \citep{noauthor_natural_nodate}.
+computational linguistics \citep{tissera_natural_2025}.
 The system described in this paper serves as a starting point for 
 creating pedagogical dictionaries designed for learners of 
 polysynthetic languages and the morphological challenges they 
@@ -473,6 +473,72 @@ experienced by learners. The code and data used for the project
 is open source and will hopefully benefit other individuals and 
 organizations looking to create language learning resources. 
 
+\section{Limitations}
+The project received funding (\$10,000 CAD) and had a 1 year deadline 
+as per the agreement for the funding. Unfortunately, the cost of many 
+high quality Tamil dictionary datasets far exceeded the available funding 
+and consequently could not be used. This also impacted the testing process, 
+as all test data had to be created manually and thus was limited to a few hundred inputs. 
+Additionally, this project was done independently and on a voluntary basis 
+without the affiliation of any research institution, which limited the time and 
+resources that could be dedicated to the project. 
+
+\section{Ethics}
+We discuss here the ethical considerations of this project on the axes of access, 
+equitable representation of language variation, and data privacy and consent. 
+
+\subsection{Access}
+Kelvi was intentionally designed to be open-source and free to use because the 
+motivation behind it was to develop a framework for a language learning tool that 
+could be used by other low resource, minoritized languages. The intention was not 
+to contribute to the history of extraction, exploitation, and gatekeeping of 
+language resources in the field of linguistics \citep{leonard_toward_2021} by 
+using language data and putting it behind a pay-wall, especially given one of the 
+authors is a member of the language community the tool was built for. 
+Open access to language data was deemed appropriate in this case, as Tamil enjoys 
+majority language status in numerous jurisdictions (Tamil Nadu, Sri Lanka, Singapore), 
+and so it wouldn’t be considered sensitive information. In future collaborations with 
+other language communities, however, those communities will always have full rights 
+to their data and the choice to keep it open or limited access to only community members, 
+and this is supported by the tool’s permissive open source licence.
+
+\subsection{Equitable Representation of Language Varieties}
+We are aware that digital representations of language, especially in educational contexts 
+such as Kelvi, can influence the relative prestige of the varieties used or omitted. 
+Kelvi was deliberately designed to only represent the formal written variety of Tamil. 
+The formal register remains largely uniform across the social axes of religion and region, 
+along which conversely, the spoken register varies greatly. In this way, we hope that 
+Kelvi is accessible to all Tamil users. That being said, we acknowledge that because 
+spoken varieties are not represented in Kelvi, this may contribute to the commonly 
+held belief of language purity that privileges written Tamil over spoken, informal Tamil \citep{annamalai_social_2011}. 
+Currently our team is lacking in the linguistic expertise required to adequately 
+represent all of the spoken varieties fairly, and so we seek to form collaborations 
+with speakers of different Tamil varieties to make Kelvi more inclusive in this way.
+\\While formal written Tamil does not undergo significant variation, the same is not 
+true of Tamil written using romanization. There is no “standard” for romanization, 
+and so each individual uses their own conventions. We don’t want to present any 
+one romanization system as a “standard”; in the romanization shown to the user, 
+we use a convention that is associated more with academia, using characters that 
+aren’t easily typed (i.e., ṭ), to signal to users that the tool isn’t meant to 
+influence how they already type. However, the options for romanization input are 
+very limited, and because the romanization is built using a one-to-many mapping (\ref{sec:romanization}), 
+this mapping does inadvertently end up being prescriptive. Hopefully, as we 
+improve the romanization input, this unintentional side-effect will lessen. 
+Finally, since Kelvi is still only in the MVP stage, it does not have 100\% accuracy yet. 
+There are disclaimers on the website informing users of this, so hopefully 
+this lets learners and teachers alike anticipate that there may be the occasional error.
+
+\subsection{Data Privacy and Consent}
+User input is temporarily available for us to view through the web hosting service Kelvi is hosted on. 
+The input is anonymous and can’t be tracked to any individuals. We view this input 
+data solely for the purpose of bug-fixing (i.e., keeping track of any failing inputs to add to our testing process).
+\\User feedback from the initial round of user testing has been anonymized, and 
+none of their language data was used in the building of Kelvi or accessible to anyone outside of the team. 
+The interviews were recorded with their consent and they were informed that the recordings would only be 
+consulted for the purposes of improving the tool, and would not be shared with anyone else.
+\\Additional feedback solicited once the MVP was built was encouraged to be submitted through the 
+anonymized feedback forms on the Kelvi website. 
+Some individuals contacted the authors directly; regardless, all feedback is kept anonymized here and in any future publications.
 
 
 % Please see the general instructions
@@ -501,9 +567,9 @@ Sociolinguistic questions used for the exploratory interview:
 \end{itemize}
 Below are the tasks given to the participants to complete with the prototype. Note that the Tamil words were presented in text; no romanization was given and facilitators did not read out the words.\\
 \begin{enumerate}
-  \item Find the meaning of பெரியவர்களுக்கு using the prototype interface. Try entering the word using Tamglish\footnote{Colloquial term used to refer to the code-mixing of Tamil and English in casual speech.} / English letters.
-  \item Find the meaning of அறிந்துகொண்டேன் but type the word in Tamil.
-  \item Find the meaning of பெருகிவிட்டால் but use your voice. 
-  \item Find the meaning of சிதறிவிடும் using your preferred input method from the previous tasks.
+  \item Find the meaning of \foreignlanguage{tamil}{பெரியவர்களுக்கு} using the prototype interface. Try entering the word using Tamglish\footnote{Colloquial term used to refer to the code-mixing of Tamil and English in casual speech.} / English letters.
+  \item Find the meaning of \foreignlanguage{tamil}{அறிந்துகொண்டேன்} but type the word in Tamil.
+  \item Find the meaning of \foreignlanguage{tamil}{பெருகிவிட்டால்} but use your voice. 
+  \item Find the meaning of \foreignlanguage{tamil}{சிதறிவிடும்} using your preferred input method from the previous tasks.
 \end{enumerate}
 \end{document}
