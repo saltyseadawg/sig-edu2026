@@ -262,20 +262,23 @@ If no valid dictionary entry is found, other strategies are
 employed to identify the lemma, such as suffix matching.
 
 \subsection{Suffix Matching} \label{sec:suffix-matching}
-Where a valid lemma is not found by the lemmatizer, 
-suffix matching is performed. First, a backwards search is 
-performed on the input to see if there is a match with any
-suffix included in the Gramble JSON file. If there are multiple matches, 
-the longest one is selected. We create a new potential lemma by 
-removing the text of the matched suffix from the input word. 
-If the potential lemma is a valid lemma, we return this alongside the 
-suffix as the output to the user. If the potential lemma is not a valid lemma, 
-we check if the suffix that we found in the Gramble JSON has any 
+To identify the potential suffix(es) on an input word, a backwards 
+search is performed on the input to see if there is a match with 
+any suffix included in the Gramble JSON file. If there are multiple matches, 
+the longest one (whose length is less than the length of the input) is 
+selected. If a valid lemma was found using the lemmatization process 
+described previously, we return both the lemma and the suffix that 
+we identified. If a valid lemma wasn’t found, we create a new potential 
+lemma by removing the text of the matched suffix from the input word. 
+If the potential lemma is now a valid lemma, (i.e., exists in the 
+dictionary data as a headword), we return this alongside the suffix 
+as the output to the user. If the potential lemma is still not a valid 
+lemma, we check if the suffix that we found in the Gramble JSON has any 
 material in its “add-back” field: this field contains phonological 
 information that needs to be added to a stem in order to turn it into a lemma. 
-If the “add-back” field is non-empty, we add this material to the potential lemma, 
-confirm if this is now a valid lemma, and return it. If this strategy also fails, 
-we return a “word not found” error to the user.
+If the “add-back” field is non-empty, we add this material 
+to the potential lemma, confirm if this is now a valid lemma, 
+and return it. If this strategy also fails, we return a “word not found” error to the user.
 
 \subsection{Datasets}
 We used two open source datasets for the Tamil dictionary component, specifically 
