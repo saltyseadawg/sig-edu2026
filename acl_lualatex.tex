@@ -213,17 +213,17 @@ interface made it hard to correlate meaning with the word parts.
 \\
 Conversely, the other participants felt that the tool was quite useful. 
 In N’s case, they thought that learners would find the pedagogical 
-breakdown helpful and wished the tool existed then they were attending 
+breakdown helpful and wished the tool existed when they were attending 
 Tamil language class during their adolescence. D, who self-described as 
 conversationally fluent, thought that the pedagogical breakdown was 
 not only helpful, but also corrects errors made by Google Translate. 
-Lastly, R, who had only recently started learning Tamil thought that 
+Lastly, R, who had only recently started learning Tamil, thought that 
 the definitions provided by the tool were clearer than Google Translate.
 
 \section{User Requirements}
 Based on the results of the exploratory interviews, we established the 
 following user requirements to guide the design of the website. 
-We also drew inspiration from the Kawennon:nis ´ verb conjugator for 
+We also drew inspiration from the Kawennon:nis verb conjugator for 
 Kanyen'keha \citep{kazantseva_kawennonnis_2018} and its aim to 
 assist users in acquiring morphology patterns rather than 
 arbitrarily memorizing definitions of Tamil words. 
@@ -290,19 +290,19 @@ we created for suffix generation and why. All attributes are string type.
 The primary attributes that every suffix entry in the suffix database have are 
 \textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
 as it appears in an input word, and is the attribute that the input is 
-matched against as described in the systems design (\ref{sec:systems-design}). 
+matched against as described in the systems design (\ref{sec:suffix-matching}). 
 For instance, the input \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} ‘ghosts’ would match to the 
-suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure \ref{fig:ui-puthamkal}. \textit{gloss} is a layman's definition of this suffix.
+suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure \ref{fig:gramble-display}. \textit{gloss} is a layman's definition of this suffix.
 \begin{figure}[t]
   \includegraphics[width=\columnwidth]{tamil-gramble.png}
   \caption{Excerpt from Gramble file.}
-  \label{fig:gramble-display}
+  \label{fig:ui-puthamkal}
 \end{figure}
 \textit{display} is the version of the matched suffix that is shown to the user: 
-this is generally the same as what is in text, but differs in situations 
+this is generally the same as what is in \textit{text}, but differs in situations 
 where a suffix undergoes minor changes based on phonological environment\footnote{Using linguistic terminology, \textit{text} and \textit{display} can roughly be equated to \textit{surface form} and \textit{underlying representation} respectively.}. 
 For example, the plural suffix \foreignlanguage{tamil}{கள்} \textit{gaL} can also also appear as \foreignlanguage{tamil}{க்கள்} \textit{kkaL} or 
-\foreignlanguage{tamil}{ங்கள்} \textit{ngaL} based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its 
+\foreignlanguage{tamil}{ங்கள்} \textit{ngaL} based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its prototypical
 form, this is the form of the suffix that is shown (“displayed”) to the 
 user in all cases, as shown in Figure \ref{fig:gramble-display}. Finally, add-back is used as a 
 secondary lemmatizer when the primary fails, as detailed above in section \ref{sec:suffix-matching}. 
@@ -349,7 +349,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
     \hline
     total & \textbf{280} & \\
   \end{tabular}
-  \caption{some caption}
+  \caption{Performance of Kelvi on test input words}
   \label{tab:1}
 \end{table}
 
@@ -363,7 +363,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
     \hline
     Total & \textbf{20} & \\
   \end{tabular}
-  \caption{Unconjugated (input=lemma)}
+  \caption{Kelvi performance on inputs with no affixes}
   \label{tab:unconjugated}
 \end{table}
 
@@ -377,7 +377,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
     \hline
     total & \textbf{260} & \\
   \end{tabular}
-  \caption{Conjugated (input=lemma)}
+  \caption{Kelvi performance on inputs with affixes}
   \label{tab:conjugated}
 \end{table}
 
@@ -391,7 +391,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
     \hline
     Total & \textbf{89} & \\
   \end{tabular}
-  \caption{Input returns no result for conjugated (input=lemma)}
+  \caption{Cause for "word not found" errors on inputs with affixes}
   \label{tab:no-result}
 \end{table}
 
@@ -406,7 +406,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
     \hline
     total & \textbf{45} & \\
   \end{tabular}
-  \caption{Output is incorrect for conjugated (input=lemma)}
+  \caption{Types of errors on inputs with affixes}
   \label{tab:output-incorrect}
 \end{table}
 
@@ -449,7 +449,7 @@ Our current bottlenecks and proposed improvements to the software can be summari
   \item The lemmatizer that we use fails on some inputs; as discussed in (\ref{sec:suffix-matching}), we are compensating for these gaps using Gramble, which we will continue to do. 
   \item Some morphemes are homophonous; for example, the suffix -um on a verb means “it will”, but on a noun means “and”. Currently we return both definitions, but if we are able to acquire reliable part-of-speech data, we can refine the output returned to the user. 
   \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping\footnote{In fact, it is impossible. This is because the letter “n” can be mapped to \foreignlanguage{tamil}{ண}, \foreignlanguage{tamil}{ந}, or \foreignlanguage{tamil}{ன}. \foreignlanguage{tamil}{ண} is pronounced differently from \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} and so can be mapped to a distinct romanized character like “N”, but \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} are pronounced the same. They can’t usefully be mapped to distinct romanized characters because even though they appear in complementary phonological environments 90\% of the time, the remaining 10\% the distinction is lexically determined, i.e. unpredictable from just the pronunciation, and therefore not something a user who can’t read the Tamil script would be able to know.}, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine_zero-shot_2025}, \citealp{littell_waldayu_2017}).
-  \item Since Kelvi was primarily designed to capture written forms, words in the spoken/informal register are underrepresented. Since these words vary widely across a range of dialects, collaboration with speakers across this span of variation would greatly enhance the coverage of our tool.
+  \item Since Kelvi was primarily designed to capture written forms, words in the spoken/informal register are underrepresented. As these words vary widely across a range of dialects, collaboration with speakers from across this span of variation would greatly enhance the coverage of our tool.
 \end{enumerate}
 
 \section{Conclusion}
