@@ -142,7 +142,7 @@ b) users found the morphological breakdown useful and
 c) if users would use the tool if it existed.
 
 \subsection{Participants}
-To determine our design requirements, we interviewed 10 Tamil speakers 
+To determine our design requirements, we interviewed 10 Tamil adult speakers over the age of 20
 who were asked to self describe Tamil language abilities in terms of oral fluency and literacy. 
 Of our participants, 3 were native speakers, 6 were heritage speakers, and one was an L2 learner 
 with no Tamil background. Importantly, oral fluency and literacy were not correlated for our speakers. 
@@ -186,8 +186,8 @@ For example, L, who had strong oral abilities but could not read Tamil easily,
 used Google Translate’s TTS feature to hear the word and would then be able to figure out what it meant. 
 On the other hand, IP would use Google Translate to get a Tamil word’s romanization which they would 
 then input into the Google search engine to try to find different contexts and uses of the word. 
-For the participants who did rely on the translation provided by Google Translate, 
-a couple Interestingly, none of our participants mentioned using generative AI tools,
+For the participants who did rely on the translations provided by Google Translate, 
+several commented that they knew its translations weren't necessarily trustworthy. Interestingly, none of our participants mentioned using generative AI tools,
 however this could be due to the fact that most of our participants were over the age of twenty-five. 
 As \citet{MAGOTRA201681} notes, younger individuals are more likely to 
 adopt new technologies compared to older individuals.\\
@@ -296,11 +296,11 @@ as it appears in an input word, and is the attribute that the input is
 matched against as described in the systems design (\ref{sec:suffix-matching}). 
 For instance, the input \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} ‘ghosts’ would match to the 
 suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure \ref{fig:gramble-display}. \textit{gloss} is a layman's definition of this suffix.
-\begin{figure}[t]
-  \includegraphics[width=\columnwidth]{tamil-gramble.png}
+\begin{figure*}[h]
+  \includegraphics[width=\textwidth]{tamil-gramble.png}
   \caption{Excerpt from Gramble file.}
-  \label{fig:ui-puthamkal}
-\end{figure}
+  \label{fig:gramble-display}
+\end{figure*}
 \textit{display} is the version of the matched suffix that is shown to the user: 
 this is generally the same as what is in \textit{text}, but differs in situations 
 where a suffix undergoes minor changes based on phonological environment\footnote{Using linguistic terminology, \textit{text} and \textit{display} can roughly be equated to \textit{surface form} and \textit{underlying representation} respectively.}. 
@@ -342,7 +342,7 @@ as once we confirmed that a sample few were working, we assumed others of the
 type would also be relatively high performing. Of course, formalized 
 random testing is required to verify this. A high level overview of the 
 tool’s performance on this test set is shown in Table \ref{tab:1}.
-\begin{table}
+\begin{table}[h]
   \begin{tabular}{c|c|c}
     Result & \# of Tokens & Percentage\\
     \hline
@@ -356,7 +356,9 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
   \label{tab:1}
 \end{table}
 
-\begin{table}
+We primarily tested for presence of lemmas in our dictionary data (shown in Table \ref{tab:unconjugated}), 
+and accurate lemmatization and suffix identification (shown in Table \ref{tab:conjugated}).
+\begin{table}[h]
   \begin{tabular}{c|c|c}
     Result & \# of Tokens & Percentage\\
     \hline
@@ -370,7 +372,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
   \label{tab:unconjugated}
 \end{table}
 
-\begin{table}
+\begin{table}[h]
   \begin{tabular}{c|c|c}
      & \# of Tokens & Percentage\\
     \hline
@@ -384,8 +386,12 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
   \label{tab:conjugated}
 \end{table}
 
+For inputs that produced a “word not found” error, we isolated which were 
+failing because the lemma itself was not present in our dictionary data, 
+and which were failing because our tool was not able to lemmatize the word, 
+as shown in Table \ref{tab:no-result}. 
 % had to shorten issues because they overflow the column otherwise
-\begin{table}
+\begin{table}[h]
   \begin{tabular}{c|c|c}
     Issue & \# of Tokens & Percentage\\
     \hline
@@ -398,8 +404,17 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
   \label{tab:no-result}
 \end{table}
 
+This delineation will help us isolate which types of 
+structures need to be added to our suffix database. 
+A major category of words that are currently missing is lexical compounds. 
+These are words that have two lemmas, which our model does not currently account for. 
+Some lexemes commonly used in compounds like \foreignlanguage{tamil}{போது} \textit{po:thu} (‘when’, colloquially) 
+can be added to the database as suffixes, but Tamil also has a 
+productive process of forming novel compounds\footnote{For example, the poetic word \foreignlanguage{tamil}{கண்ணுறங்கா} \textit{kaNNuRanga}: ‘(as) (my) eyes sleep’ is composed of the lemmas \foreignlanguage{tamil}{கண்} \textit{kaN} ‘eye’ and \foreignlanguage{tamil}{உறங்கு} \textit{uRangu} ‘to sleep’, neither of which can be classified as “commonly” used in compounds.}, that will require a more nuanced approach.
+For inputs that produced incorrect outputs, we differentiated between 
+whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-incorrect}). 
 % both incorrect or else overflow ugly issue
-\begin{table}
+\begin{table}[h]
   \begin{tabular}{c|c|c}
     Issue & \# of Tokens & Percentage\\
     \hline
@@ -412,23 +427,6 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
   \caption{Types of errors on inputs with affixes}
   \label{tab:output-incorrect}
 \end{table}
-
-
-
-We primarily tested for presence of lemmas in our dictionary data (shown in Table \ref{tab:unconjugated}), 
-and accurate lemmatization and suffix identification (shown in Table \ref{tab:conjugated}). 
-For inputs that produced a “word not found” error, we isolated which were 
-failing because the lemma itself was not present in our dictionary data, 
-and which were failing because our tool was not able to lemmatize the word, 
-as shown in Table \ref{tab:no-result}. This delineation will help us isolate which types of 
-structures need to be added to our suffix database. 
-A major category of words that are currently missing is lexical compounds. 
-These are words that have two lemmas, which our model does not currently account for. 
-Some lexemes commonly used in compounds like \foreignlanguage{tamil}{போது} \textit{po:thu} (‘when’, colloquially) 
-can be added to the database as suffixes, but Tamil also has a 
-productive process of forming novel compounds\footnote{For example, the poetic word \foreignlanguage{tamil}{கண்ணுறங்கா} \textit{kaNNuRanga}: ‘(as) (my) eyes sleep’ is composed of the lemmas \foreignlanguage{tamil}{கண்} \textit{kaN} ‘eye’ and \foreignlanguage{tamil}{உறங்கு} \textit{uRangu} ‘to sleep’, neither of which can be classified as “commonly” used in compounds.}, that will require a more nuanced approach.
-For inputs that produced incorrect outputs, we differentiated between 
-whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-incorrect}). 
 The results from Tables \ref{tab:no-result} and \ref{tab:output-incorrect} in particular highlight that more 
 work can be done in improving the suffix database, both to increase 
 the accuracy and quantity of suffixes identified, as well as to assist 
