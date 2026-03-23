@@ -40,7 +40,10 @@
 % \newfontfamily\tamilfont{Noto Sans Tamil}
 
 %%%%%
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
+\usepackage{hyperref}
 
 \title{Kelvi: a “pedagogical” morphological parser to support Tamil literacy}
 
@@ -91,12 +94,13 @@ Overall there number around 80 million Tamil speakers, with nearly 240,000 speak
 The diaspora population in Canada largely consists of heritage speakers - that is to say, people who grow up hearing their family speak Tamil, but aren’t necessarily entirely fluent themselves \citep{polinsky_heritage_2007}. 
 Two of the main complicating features of Tamil literacy are the language’s heavily diglossic nature and its agglutinative properties. 
 Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. 
-See (1), where a complete utterance is expressed as one word. 
+See (\ref{ex:elders}), where a complete utterance is expressed as one word. \\
 \begin{example}
   \expreamble{\foreignlanguage{tamil}{பெரியவர்களுடனா}}
   \digloss{\foreignlanguage{tamil}{பெரியவர்} \foreignlanguage{tamil}{கள்} \foreignlanguage{tamil}{ுடன்} \foreignlanguage{tamil}{ா}}
     {periyavar kaḷ uṭan a:}
-    {with the elders?}
+    {\textit{with the elders?}}
+  \label{ex:elders}
 \end{example}
 In its written Tamil the higher, formal register is used, where every suffix is phonologically expressed in its entirety. 
 In the colloquial spoken register, however, Tamil words undergo massive phonological reduction, 
@@ -134,7 +138,7 @@ we involved target users early on in our explorations of the problem space to en
 We wanted to understand what bottlenecks users were currently facing when searching for Tamil word definitions as well as existing paint points they were experiencing. 
 
 \subsection{Prototype}
-We built a medium fidelity prototype in Figma to test our design. 
+We built a medium fidelity prototype in Figma to test our design, accessible \href{https://www.figma.com/proto/1tpcdO49QkVfDOQYSrZ5YH/Tamil-Dict-Design-updated?node-id=5-288&starting-point-node-id=5%3A288&t=XY9IO1vT16vxJg0e-1}{here}. 
 We wanted to know whether a) users would be able to determine the meaning 
 of a word when presented with the morphological breakdown and if 
 b) users found the morphological breakdown useful and 
@@ -146,7 +150,13 @@ who were asked to self describe Tamil language abilities in terms of oral fluenc
 Of our participants, 3 were native speakers, 6 were heritage speakers, and one was an L2 learner 
 with no Tamil background. Importantly, oral fluency and literacy were not correlated for our speakers. 
 In other words, speakers that were fluent in Tamil were not necessarily strong readers. 
-As shown in (2), most of the participants had stronger oral abilities compared to reading and writing. 
+As shown in Figure \ref{fig:tamil-fluency-literacy}, most of the participants had stronger oral abilities compared to reading and writing. 
+
+\begin{figure}[t]
+  \includegraphics[width=\columnwidth]{tamil-fluency-literacy.png}
+  \caption{Graph displaying participants' self-described fluency and literacy in Tamil.}
+  \label{fig:tamil-fluency-literacy}
+\end{figure}
 
 \subsection{Exploratory Interview}
 At the beginning of the session, participants were asked to self-describe their 
@@ -159,8 +169,8 @@ Although the answers to these questions were mostly used to corroborate the
 responder’s self description of their Tamil abilities and not used for any formal analyses, 
 the questions themselves have been included in the appendix for future researchers. 
 \\
-Users were then asked to complete five tasks to test the usability of the prototype’s UI as well as input methods, 
-which can also be found in the appendices.  
+Users were then asked to complete four tasks to test the usability of the prototype’s UI as well as input methods, 
+which can also be found in the appendices. 
 
 After completion of the tasks, users were asked the following questions:
 \begin{itemize}
@@ -172,8 +182,7 @@ After completion of the tasks, users were asked the following questions:
 \end{itemize}
 
 \subsection{Interview Results}
-\textbf{Task 1:}\\
-During the exploratory interviews, participants were asked what tools they were currently using when looking 
+During the exploratory interviews, participants were asked what tools they were currently using to look 
 up the meaning of Tamil words. The most common answer given was Google Translate, 
 however not all participants were using it just to get the translation of a word. 
 For example, L, who had strong oral abilities but could not read Tamil easily, 
@@ -184,10 +193,20 @@ For the participants who did rely on the translation provided by Google Translat
 a couple Interestingly, none of our participants mentioned using generative AI tools,
 however this could be due to the fact that most of our participants were over the age of twenty-five. 
 As \citet{MAGOTRA201681} notes, younger individuals are more likely to 
-adopt new technologies compared to older individuals.
-\\
+adopt new technologies compared to older individuals.\\
+\begin{figure}[h]
+  \includegraphics[width=\columnwidth]{graph-lookup.png}
+  \caption{Graph of participants' methods for looking up Tamil words.}
+  \label{fig:graph-lookup}
+\end{figure}
+
 When asked if they would use this tool, seven participants responded with yes, two responded with no, and one with maybe.  
 %insert image
+\begin{figure}[h]
+  \includegraphics[width=\columnwidth]{graph-use-tool.png}
+  \caption{Graph of participants' responses to if they would use a tool like the prototype.}
+  \label{fig:graph-use-tool}
+\end{figure}
 SM, who is fluent with weak literacy skills, stated they would not use the tool. 
 TB, who is a beginner heritage speaker that cannot read, stated the reason behind 
 their “maybe” response was because they felt that their level of Tamil was 
@@ -217,7 +236,13 @@ arbitrarily memorizing definitions of Tamil words.
   \item Is accessible on the phone. 
 \end{enumerate}
 
-\section{Systems Design}
+\section{Systems Design} \label{sec:systems-design}
+In this section we discuss the different components of Kelvi and how they interact. 
+\begin{figure}[h]
+  \includegraphics[width=\columnwidth]{system-diagram.png}
+  \caption{Diagram of Kelvi's backend and frontend.}
+  \label{fig:sys-diagram}
+\end{figure}
 \subsection{Romanized/Tamil Input}
 Users can input using the Tamil script or romanization (i.e., \foreignlanguage{tamil}{கேள்வி} or \textit{kelvi}). 
 All of the dictionary and morphological data is stored in the Tamil script, 
@@ -239,7 +264,7 @@ against the dictionary data to see if it is an existing headword.
 If no valid dictionary entry is found, other strategies are 
 employed to identify the lemma, such as suffix matching.
 
-\subsection{Suffix Matching}
+\subsection{Suffix Matching} \label{sec:suffix-matching}
 Where a valid lemma is not found by the lemmatizer, 
 suffix matching is performed. First, a backwards search is 
 performed on the input to see if there is a match with any
@@ -268,21 +293,31 @@ we created for suffix generation and why. All attributes are string type.
 The primary attributes that every suffix entry in the suffix database have are 
 \textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
 as it appears in an input word, and is the attribute that the input is 
-matched against as described in the system design walkthrough (section). 
+matched against as described in the systems design (\ref{sec:systems-design}). 
 For instance, the input \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} ‘ghosts’ would match to the 
-suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure. \textit{gloss} is a layman’s definition of this suffix.
-\textit{Display} is the version of the matched suffix that is shown to the user: 
+suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure \ref{fig:ui-puthamkal}. \textit{gloss} is a layman's definition of this suffix.
+\begin{figure}[t]
+  \includegraphics[width=\columnwidth]{tamil-gramble.png}
+  \caption{Excerpt from Gramble file.}
+  \label{fig:gramble-display}
+\end{figure}
+\textit{display} is the version of the matched suffix that is shown to the user: 
 this is generally the same as what is in text, but differs in situations 
 where a suffix undergoes minor changes based on phonological environment\footnote{Using linguistic terminology, \textit{text} and \textit{display} can roughly be equated to \textit{surface form} and \textit{underlying representation} respectively.}. 
 For example, the plural suffix \foreignlanguage{tamil}{கள்} \textit{gaL} can also also appear as \foreignlanguage{tamil}{க்கள்} \textit{kkaL} or 
 \foreignlanguage{tamil}{ங்கள்} \textit{ngaL} based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its 
 form, this is the form of the suffix that is shown (“displayed”) to the 
-user in all cases, as shown in Figure. Finally, add-back is used as a 
-secondary lemmatizer when the primary fails, as detailed above in section. 
+user in all cases, as shown in Figure \ref{fig:gramble-display}. Finally, add-back is used as a 
+secondary lemmatizer when the primary fails, as detailed above in section \ref{sec:suffix-matching}. 
 In this instance, if the lemmatizer were unable to parse \foreignlanguage{tamil}{பூதங்கள்}, 
 once the suffix match \foreignlanguage{tamil}{ங்கள்} was identified and removed from the input, 
 the character \foreignlanguage{tamil}{ம்} (m) would then be “added back” to this new form to create 
 the valid lemma \foreignlanguage{tamil}{பூதம்} \textit{bootham} (‘ghost’). 
+\begin{figure}[t]
+  \includegraphics[width=\columnwidth]{puthamkal.png}
+  \caption{Kelvi UI when given \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} as input.}
+  \label{fig:ui-puthamkal}
+\end{figure}
 
 \section{Results}
 \subsection{Systems Analysis}
@@ -306,13 +341,86 @@ form [lemma + tense + person-number-gender], are not included in the test set,
 as once we confirmed that a sample few were working, we assumed others of the 
 type would also be relatively high performing. Of course, formalized 
 random testing is required to verify this. A high level overview of the 
-tool’s performance on this test set is shown in table 1.
-We primarily tested for presence of lemmas in our dictionary data (shown in table 2), 
-and accurate lemmatization and suffix identification (shown in table 3). 
+tool’s performance on this test set is shown in Table \ref{tab:1}.
+\begin{table}
+  \begin{tabular}{c|c|c}
+    Result & \# of Tokens & Percentage\\
+    \hline
+    correct & 141 & 50\% \\
+    incorrect & 46 & 16\% \\
+    no result & 93 & 33\% \\
+    \hline
+    total & \textbf{280} & \\
+  \end{tabular}
+  \caption{some caption}
+  \label{tab:1}
+\end{table}
+
+\begin{table}
+  \begin{tabular}{c|c|c}
+    Result & \# of Tokens & Percentage\\
+    \hline
+    Correct & 15 & 75\% \\
+    Incorrect & 1 & 5\% \\
+    No result & 4 & 20\% \\
+    \hline
+    Total & \textbf{20} & \\
+  \end{tabular}
+  \caption{Unconjugated (input=lemma)}
+  \label{tab:unconjugated}
+\end{table}
+
+\begin{table}
+  \begin{tabular}{c|c|c}
+     & \# of Tokens & Percentage\\
+    \hline
+    Correct & 126 & 48\% \\
+    Incorrect & 45 & 17\% \\
+    No result & 89 & 34\% \\
+    \hline
+    total & \textbf{260} & \\
+  \end{tabular}
+  \caption{Conjugated (input=lemma)}
+  \label{tab:conjugated}
+\end{table}
+
+% had to shorten issues because they overflow the column otherwise
+\begin{table}
+  \begin{tabular}{c|c|c}
+    Issue & \# of Tokens & Percentage\\
+    \hline
+    Lemma not in dataset & 10 & 11\% \\
+    Failed lemmatization & 79 & 89\% \\
+    \hline
+    Total & \textbf{89} & \\
+  \end{tabular}
+  \caption{Input returns no result for conjugated (input=lemma)}
+  \label{tab:no-result}
+\end{table}
+
+% both incorrect or else overflow ugly issue
+\begin{table}
+  \begin{tabular}{c|c|c}
+    Issue & \# of Tokens & Percentage\\
+    \hline
+    Incorrect lemma & 9 & 20\% \\
+    Incorrect suffix & 32 & 71\% \\
+    Both incorrect & 4 & 9\% \\
+    \hline
+    total & \textbf{45} & \\
+  \end{tabular}
+  \caption{Output is incorrect for conjugated (input=lemma)}
+  \label{tab:output-incorrect}
+\end{table}
+
+
+
+We primarily tested for presence of lemmas in our dictionary data (shown in Table \ref{tab:unconjugated}), 
+and accurate lemmatization and suffix identification (shown in Table \ref{tab:conjugated}). 
 For inputs that produced a “word not found” error, we isolated which were 
 failing because the lemma itself was not present in our dictionary data, 
 and which were failing because our tool was not able to lemmatize the word, 
-as shown in Table 4. This delineation will help us isolate which types of 
+as shown in Table \ref{tab:no-result}. This delineation will help us isolate which types of 
 structures need to be added to our suffix database. 
 A major category of words that are currently missing is lexical compounds. 
 These are words that have two lemmas, which our model does not currently account for. 
@@ -320,8 +428,8 @@ Some lexemes commonly used in compounds like \foreignlanguage{tamil}{போத�
 can be added to the database as suffixes, but Tamil also has a 
 productive process of forming novel compounds\footnote{For example, the poetic word \foreignlanguage{tamil}{கண்ணுறங்கா} \textit{kaNNuRanga}: ‘(as) (my) eyes sleep’ is composed of the lemmas \foreignlanguage{tamil}{கண்} \textit{kaN} ‘eye’ and \foreignlanguage{tamil}{உறங்கு} \textit{uRangu} ‘to sleep’, neither of which can be classified as “commonly” used in compounds.}, that will require a more nuanced approach.
 For inputs that produced incorrect outputs, we differentiated between 
-whether the error was in the lemma, the suffix, or both (table 5). 
-The results from tables 4 and 5 in particular highlight that more 
+whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-incorrect}). 
+The results from Tables \ref{tab:no-result} and \ref{tab:output-incorrect} in particular highlight that more 
 work can be done in improving the suffix database, both to increase 
 the accuracy and quantity of suffixes identified, as well as to assist 
 in the lemmatization process. Thus this is where the focus of our future work lies.
@@ -341,7 +449,7 @@ evaluating the feasibility of incorporating the other requested features.
 Our current bottlenecks and proposed improvements to the software can be summarized as follows:
 \begin{enumerate}
   \item We have limited root-word (i.e., dictionary) data, and results can be improved if we are able to acquire more data. 
-  \item The lemmatizer that we use fails on some inputs; as discussed in (section), we are compensating for these gaps using Gramble, which we will continue to do. 
+  \item The lemmatizer that we use fails on some inputs; as discussed in (\ref{sec:suffix-matching}), we are compensating for these gaps using Gramble, which we will continue to do. 
   \item Some morphemes are homophonous; for example, the suffix -um on a verb means “it will”, but on a noun means “and”. Currently we return both definitions, but if we are able to acquire reliable part-of-speech data, we can refine the output returned to the user. 
   \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping\footnote{In fact, it is impossible. This is because the letter “n” can be mapped to \foreignlanguage{tamil}{ண}, \foreignlanguage{tamil}{ந}, or \foreignlanguage{tamil}{ன}. \foreignlanguage{tamil}{ண} is pronounced differently from \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} and so can be mapped to a distinct romanized character like “N”, but \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} are pronounced the same. They can’t usefully be mapped to distinct romanized characters because even though they appear in complementary phonological environments 90\% of the time, the remaining 10\% the distinction is lexically determined, i.e. unpredictable from just the pronunciation, and therefore not something a user who can’t read the Tamil script would be able to know.}, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine_zero-shot_2025}, \citealp{littell_waldayu_2017}).
   \item Since Kelvi was primarily designed to capture written forms, words in the spoken/informal register are underrepresented. Since these words vary widely across a range of dialects, collaboration with speakers across this span of variation would greatly enhance the coverage of our tool.
@@ -351,8 +459,7 @@ Our current bottlenecks and proposed improvements to the software can be summari
 Although Tamil has a relatively large speaker population, it is still considered a 
 low-resource language which adds a layer of difficulty when developing digital tools 
 and resources for Tamil that make use of data driven innovations in 
-computational linguistics \citep{noauthor_tamil_2025} 
-%(Tissera 2025). 
+computational linguistics \citep{noauthor_natural_nodate}.
 The system described in this paper serves as a starting point for 
 creating pedagogical dictionaries designed for learners of 
 polysynthetic languages and the morphological challenges they 
@@ -383,9 +490,20 @@ organizations looking to create language learning resources.
 
 \appendix
 
-\section{Example Appendix}
-\label{sec:appendix}
-
-This is an appendix.
-
+\section{Appendix}
+\label{sec:appendix-a}
+\section*{Interview Questions}
+Sociolinguistic questions used for the exploratory interview:
+\begin{itemize}
+  \item How old are you?
+  \item How would you describe your fluency in Tamil? What situations do you tend to use Tamil in? Speaking? Reading? Writing?
+  \item Where did you go to school? 
+\end{itemize}
+Below are the tasks given to the participants to complete with the prototype. Note that the Tamil words were presented in text; no romanization was given and facilitators did not read out the words.\\
+\begin{enumerate}
+  \item Find the meaning of பெரியவர்களுக்கு using the prototype interface. Try entering the word using Tamglish\footnote{Colloquial term used to refer to the code-mixing of Tamil and English in casual speech.} / English letters.
+  \item Find the meaning of அறிந்துகொண்டேன் but type the word in Tamil.
+  \item Find the meaning of பெருகிவிட்டால் but use your voice. 
+  \item Find the meaning of சிதறிவிடும் using your preferred input method from the previous tasks.
+\end{enumerate}
 \end{document}
