@@ -78,7 +78,7 @@
 
 \maketitle
 \begin{abstract}
-In this paper we discuss the development of kelvi.ca, an open source web-based dictionary and morphological parser designed to aid Tamil learners in developing their literacy skills. 
+In this paper we discuss the development of Kelvi\footnote{url redacted for anonymity}, an open source web-based dictionary and morphological parser designed to aid Tamil learners in developing their literacy skills. 
 Tamil is an agglutinative language and heavily suffixal. Existing Tamil dictionaries only carry stems, not conjugated or inflected forms, and for a beginner learner of the language, isolating the stem in an unfamiliar word can be very challenging. 
 Kelvi provides 1) the stem of any input word alongside its definition, and 2) non-technical descriptions of any suffixes that are part of this input, so that learners will gradually start to recognize these suffixes and be able to understand and produce new Tamil words themselves. 
 We also hope to show that Kelvi can be adapted for other languages and has the potential to be a useful pedagogical aid for learner literacy development, especially for agglutinative and/or polysynthetic languages which tend to be otherwise underserved in the mainstream.
@@ -86,20 +86,17 @@ We also hope to show that Kelvi can be adapted for other languages and has the p
 
 
 \section{Introduction}
-Tamil is a Dravidian language spoken primarily in south Asia, with significant global diaspora populations. 
-Overall there number around 80 million Tamil speakers, with nearly 240,000 speakers in Canada alone (\citealp{government_of_canada_language_2025}, \citealp{noauthor_tamil_2025}). 
+Tamil is a Dravidian language spoken in south and southeast Asia. It has official language status in Sri Lanka (4.2 million speakers), Singapore (688.6 thousand), and some southern Indian states (73.4 million), and is also widely spoken in Malaysia (4.8 million) and South Africa (600 thousand). In addition, there are significant diaspora populations in Europe, North America, and Australia; Tamil speakers globally number well over 80 million \citep{noauthor_tamil_pop}. 
 The diaspora population in Canada largely consists of heritage speakers - that is to say, people who grow up hearing their family speak Tamil, but aren’t necessarily entirely fluent themselves \citep{polinsky_heritage_2007}. 
 Two of the main complicating features of Tamil literacy are the language’s heavily diglossic nature and its agglutinative properties. 
 Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. 
-See (\ref{ex:elders}), where a complete utterance is expressed as one word. \\
-\begin{example}
-  \expreamble{\foreignlanguage{tamil}{பெரியவர்களுடனா}}
-  \digloss{\foreignlanguage{tamil}{பெரியவர்} \foreignlanguage{tamil}{கள்} \foreignlanguage{tamil}{ுடன்} \foreignlanguage{tamil}{ா}}
-    {periyavar kaḷ uṭan a:}
-    {\textit{with the elders?}}
-  \label{ex:elders}
-\end{example}
-In its written Tamil the higher, formal register is used, where every suffix is phonologically expressed in its entirety. 
+See Figure (\ref{fig:gramble-display}), where a complete utterance is expressed as one word. \\
+\begin{figure}[h]
+  \includegraphics[width=\columnwidth]{kelvi-example.png}
+  \caption{Tamil word as it appears in Kelvi}
+  \label{fig:gramble-display}
+\end{figure}
+In written Tamil the higher, formal register is used, where every suffix is phonologically expressed in its entirety. 
 In the colloquial spoken register, however, Tamil words undergo massive phonological reduction, 
 so that many sounds that are fully expressed in the written form of a word aren’t actually pronounced (\citealp{annamalai_modern_2019}; \citealp{renganathan_heritage_2015}). 
 This means that heritage speakers often struggle to recognize the written version of words they have only ever heard in the colloquial spoken register, 
@@ -109,7 +106,7 @@ only their lemmas do (consider how “go” can be found in an English dictionar
 Learners then face the “dictionary problem”; to summarize \citet{littell_waldayu_2017}, 
 dictionaries are intended to be a tool for language learners, but paradoxically require knowledge of the language to use; 
 in this case, knowledge of what the “dictionary form” or lemma of an unfamiliar word is. 
-The tool we built, kelvi.ca, is a dictionary and morphological parser that helps the learner who comes 
+The tool we built, Kelvi, is a web-based dictionary and morphological parser that helps the learner who comes 
 across an intimidatingly long Tamil word see how the word is broken down, and what each “part” (morpheme) means 
 in layman terms, so that they come away with a fuller understanding of the word while hopefully also starting to 
 recognize Tamil morphological patterns themselves.
@@ -121,7 +118,7 @@ digital Wendat Dictionary \citep{lukaniec_modern_2023}.
 More broadly speaking, there are several open-source technologies that have been developed to 
 support language revitalization and maintenance efforts \citep{brinklow_indigenous_nodate}, 
 such as the dictionary-builder Mother Tongues \citep{littell_waldayu_2017} and the 
-morphological generator Gramble \citep{littell_gramble_2024}. 
+morphological generator Gramble \citep{littell_gramble_2024} that was used in a pedagogical context for Oneida \citep{lu-etal-2024-empowering}. 
 For Tamil specifically there exist technical and/or academic tools such as a lemmatizer \citep{qi2020stanza}, 
 a morphological analyser \citep{sarveswaran_thamizhimorph_2021},  and a stemmer \citep{rajalingam_rdamodharantamil-stemmer_2025}, as well as some 
 pedagogical resources like a dictionary of Tamil verbs \citep{schiffman_english_2009} and a few 
@@ -264,7 +261,7 @@ employed to identify the lemma, such as suffix matching.
 \subsection{Suffix Matching} \label{sec:suffix-matching}
 To identify the potential suffix(es) on an input word, a backwards 
 search is performed on the input to see if there is a match with 
-any suffix included in the Gramble JSON file. If there are multiple matches, 
+any suffix included in the Gramble JSON file (generation of this file is discussed in the following section). If there are multiple matches, 
 the longest one (whose length is less than the length of the input) is 
 selected. If a valid lemma was found using the lemmatization process 
 described previously, we return both the lemma and the suffix that 
@@ -321,7 +318,7 @@ the valid lemma \foreignlanguage{tamil}{பூதம்} \textit{bootham} (‘gh
 
 \section{Results}
 \subsection{Systems Analysis}
-Due to limited resources and time (see Limitations chapter), 
+Due to limited resources and time (discussed in section ref{sec:limitations}), 
 we have not yet been able to perform a formal statistical evaluation. 
 The minimal test set that was used to evaluate performance so far is 
 composed of “edge-case” words, or words we predicted may be tricky to 
@@ -441,7 +438,7 @@ romanization input, including example sentences in the output, and
 providing the definition of the input word in its entirety 
 (not just of the individual morphemes). We were able to add the 
 feature of romanization input following this feedback, and are 
-evaluating the feasibility of incorporating the other requested features.
+evaluating the feasibility of incorporating the other requested features; for instance, incorporating TTS \citep{MAHAGANAPATHY2025100171}.
 
 \section{Discussion}
 Our current bottlenecks and proposed improvements to the software can be summarized as follows:
@@ -451,7 +448,8 @@ Our current bottlenecks and proposed improvements to the software can be summari
   \item Some morphemes are homophonous; for example, the suffix -um on a verb means “it will”, but on a noun means “and”. Currently we return both definitions, but if we are able to acquire reliable part-of-speech data, we can refine the output returned to the user. 
   \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping\footnote{In fact, it is impossible. This is because the letter “n” can be mapped to \foreignlanguage{tamil}{ண}, \foreignlanguage{tamil}{ந}, or \foreignlanguage{tamil}{ன}. \foreignlanguage{tamil}{ண} is pronounced differently from \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} and so can be mapped to a distinct romanized character like “N”, but \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} are pronounced the same. They can’t usefully be mapped to distinct romanized characters because even though they appear in complementary phonological environments 90\% of the time, the remaining 10\% the distinction is lexically determined, i.e. unpredictable from just the pronunciation, and therefore not something a user who can’t read the Tamil script would be able to know.}, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine_zero-shot_2025}, \citealp{littell_waldayu_2017}).
   \item Since Kelvi was primarily designed to capture written forms, words in the spoken/informal register are underrepresented. As these words vary widely across a range of dialects, collaboration with speakers from across this span of variation would greatly enhance the coverage of our tool.
-\end{enumerate}
+\end{enumerate}\\
+Future work in this area may benefit from the use of LLMs (e.g. citealp{srinivasan-etal-2025-vidai}) to address some of these challenges; models trained on datasets that include romanized Tamil and informal Tamil, in particular, have the potential to be extremely helpful.
 
 \section{Conclusion}
 Although Tamil has a relatively large speaker population, it is still considered a 
@@ -471,7 +469,7 @@ experienced by learners. The code and data used for the project
 is open source and will hopefully benefit other individuals and 
 organizations looking to create language learning resources. 
 
-\section{Limitations}
+\section{Limitations}\label{sec:limitations}
 The project received funding (\$10,000 CAD) and had a 1 year deadline 
 as per the agreement for the funding. Unfortunately, the cost of many 
 high quality Tamil dictionary datasets far exceeded the available funding 
