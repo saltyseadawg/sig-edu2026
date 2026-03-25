@@ -90,17 +90,17 @@ Tamil is a Dravidian language spoken in south and southeast Asia. It has officia
 The diaspora population in Canada largely consists of heritage speakers - that is to say, people who grow up hearing their family speak Tamil, but aren’t necessarily entirely fluent themselves \citep{polinsky_heritage_2007}. 
 Two of the main complicating features of Tamil literacy are the language’s heavily diglossic nature and its agglutinative properties. 
 Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. 
-See Figure (\ref{fig:gramble-display}), where a complete utterance is expressed as one word. \\
-\begin{figure}[h]
+See Figure (\ref{fig:kelvi-example}), where a complete utterance is expressed as one word. \\
+\begin{figure}[t]
   \includegraphics[width=\columnwidth]{kelvi-example.png}
   \caption{Tamil word as it appears in Kelvi}
-  \label{fig:gramble-display}
+  \label{fig:kelvi-example}
 \end{figure}
 In written Tamil the higher, formal register is used, where every suffix is phonologically expressed in its entirety. 
 In the colloquial spoken register, however, Tamil words undergo massive phonological reduction, 
-so that many sounds that are fully expressed in the written form of a word aren’t actually pronounced (\citealp{annamalai_modern_2019}; \citealp{renganathan_heritage_2015}). 
+so that many sounds that are fully expressed in the written form of a word aren’t actually pronounced (\citealp{annamalai_modern_2019}; \citealp{renganathan_heritage_2019}). 
 This means that heritage speakers often struggle to recognize the written version of words they have only ever heard in the colloquial spoken register, 
-since the written form “sounds” different from what they’re used to \citep{renganathan_heritage_2015}. 
+since the written form “sounds” different from what they’re used to \citep{renganathan_heritage_2019}. 
 Conjugated words don’t appear in standard dictionaries, 
 only their lemmas do (consider how “go” can be found in an English dictionary but “went” wouldn’t be.) 
 Learners then face the “dictionary problem”; to summarize \citet{littell_waldayu_2017}, 
@@ -188,7 +188,7 @@ several commented that they knew its translations weren't necessarily trustworth
 however this could be due to the fact that most of our participants were over the age of twenty-five. 
 As \citet{MAGOTRA201681} notes, younger individuals are more likely to 
 adopt new technologies compared to older individuals.\\
-\begin{figure}[h]
+\begin{figure}[ht]
   \includegraphics[width=\columnwidth]{graph-lookup.png}
   \caption{Graph of participants' methods for looking up Tamil words.}
   \label{fig:graph-lookup}
@@ -196,7 +196,7 @@ adopt new technologies compared to older individuals.\\
 
 When asked if they would use this tool, seven participants responded with yes, two responded with no, and one with maybe.  
 %insert image
-\begin{figure}[h]
+\begin{figure}[ht]
   \includegraphics[width=\columnwidth]{graph-use-tool.png}
   \caption{Graph of participants' responses to if they would use a tool like the prototype.}
   \label{fig:graph-use-tool}
@@ -232,7 +232,7 @@ arbitrarily memorizing definitions of Tamil words.
 
 \section{Systems Design} \label{sec:systems-design}
 In this section we discuss the different components of Kelvi and how they interact. 
-\begin{figure}[h]
+\begin{figure}[ht]
   \includegraphics[width=\columnwidth]{system-diagram.png}
   \caption{Diagram of Kelvi's backend and frontend.}
   \label{fig:sys-diagram}
@@ -293,7 +293,7 @@ as it appears in an input word, and is the attribute that the input is
 matched against as described in the systems design (\ref{sec:suffix-matching}). 
 For instance, the input \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} ‘ghosts’ would match to the 
 suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure \ref{fig:gramble-display}. \textit{gloss} is a layman's definition of this suffix.
-\begin{figure*}[h]
+\begin{figure*}[ht]
   \includegraphics[width=\textwidth]{tamil-gramble.png}
   \caption{Excerpt from Gramble file.}
   \label{fig:gramble-display}
@@ -339,7 +339,7 @@ as once we confirmed that a sample few were working, we assumed others of the
 type would also be relatively high performing. Of course, formalized 
 random testing is required to verify this. A high level overview of the 
 tool’s performance on this test set is shown in Table \ref{tab:1}.
-\begin{table}[h]
+\begin{table}[ht]
   \begin{tabular}{c|c|c}
     Result & \# of Tokens & Percentage\\
     \hline
@@ -355,7 +355,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
 
 We primarily tested for presence of lemmas in our dictionary data (shown in Table \ref{tab:unconjugated}), 
 and accurate lemmatization and suffix identification (shown in Table \ref{tab:conjugated}).
-\begin{table}[h]
+\begin{table}[ht]
   \begin{tabular}{c|c|c}
     Result & \# of Tokens & Percentage\\
     \hline
@@ -369,7 +369,7 @@ and accurate lemmatization and suffix identification (shown in Table \ref{tab:co
   \label{tab:unconjugated}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
   \begin{tabular}{c|c|c}
      & \# of Tokens & Percentage\\
     \hline
@@ -388,7 +388,7 @@ failing because the lemma itself was not present in our dictionary data,
 and which were failing because our tool was not able to lemmatize the word, 
 as shown in Table \ref{tab:no-result}. 
 % had to shorten issues because they overflow the column otherwise
-\begin{table}[h]
+\begin{table}[ht]
   \begin{tabular}{c|c|c}
     Issue & \# of Tokens & Percentage\\
     \hline
@@ -411,7 +411,7 @@ productive process of forming novel compounds\footnote{For example, the poetic w
 For inputs that produced incorrect outputs, we differentiated between 
 whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-incorrect}). 
 % both incorrect or else overflow ugly issue
-\begin{table}[h]
+\begin{table}[ht]
   \begin{tabular}{c|c|c}
     Issue & \# of Tokens & Percentage\\
     \hline
@@ -446,9 +446,9 @@ Our current bottlenecks and proposed improvements to the software can be summari
   \item We have limited root-word (i.e., dictionary) data, and results can be improved if we are able to acquire more data. 
   \item The lemmatizer that we use fails on some inputs; as discussed in (\ref{sec:suffix-matching}), we are compensating for these gaps using Gramble, which we will continue to do. 
   \item Some morphemes are homophonous; for example, the suffix -um on a verb means “it will”, but on a noun means “and”. Currently we return both definitions, but if we are able to acquire reliable part-of-speech data, we can refine the output returned to the user. 
-  \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping\footnote{In fact, it is impossible. This is because the letter “n” can be mapped to \foreignlanguage{tamil}{ண}, \foreignlanguage{tamil}{ந}, or \foreignlanguage{tamil}{ன}. \foreignlanguage{tamil}{ண} is pronounced differently from \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} and so can be mapped to a distinct romanized character like “N”, but \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} are pronounced the same. They can’t usefully be mapped to distinct romanized characters because even though they appear in complementary phonological environments 90\% of the time, the remaining 10\% the distinction is lexically determined, i.e. unpredictable from just the pronunciation, and therefore not something a user who can’t read the Tamil script would be able to know.}, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine_zero-shot_2025}, \citealp{littell_waldayu_2017}).
+  \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping\footnote{In fact, it is impossible. This is because the letter “n” can be mapped to \foreignlanguage{tamil}{ண}, \foreignlanguage{tamil}{ந}, or \foreignlanguage{tamil}{ன}. \foreignlanguage{tamil}{ண} is pronounced differently from \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} and so can be mapped to a distinct romanized character like “N”, but \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} are pronounced the same. They can’t usefully be mapped to distinct romanized characters because even though they appear in complementary phonological environments 90\% of the time, the remaining 10\% the distinction is lexically determined, i.e. unpredictable from just the pronunciation, and therefore not something a user who can’t read the Tamil script would be able to know.}, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine-etal-2025-zero}, \citealp{littell_waldayu_2017}).
   \item Since Kelvi was primarily designed to capture written forms, words in the spoken/informal register are underrepresented. As these words vary widely across a range of dialects, collaboration with speakers from across this span of variation would greatly enhance the coverage of our tool.
-\end{enumerate}\\
+\end{enumerate}
 Future work in this area may benefit from the use of LLMs (e.g. citealp{srinivasan-etal-2025-vidai}) to address some of these challenges; models trained on datasets that include romanized Tamil and informal Tamil, in particular, have the potential to be extremely helpful.
 
 \section{Conclusion}
