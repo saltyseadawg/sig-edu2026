@@ -261,7 +261,7 @@ employed to identify the lemma, such as suffix matching.
 \subsection{Suffix Matching} \label{sec:suffix-matching}
 To identify the potential suffix(es) on an input word, a backwards 
 search is performed on the input to see if there is a match with 
-any suffix included in the Gramble JSON file (generation of this file is discussed in the following section). If there are multiple matches, 
+any suffix included in the Gramble JSON file (generation of this file is discussed in \ref{sec:suffix-db-gen}). If there are multiple matches, 
 the longest one (whose length is less than the length of the input) is 
 selected. If a valid lemma was found using the lemmatization process 
 described previously, we return both the lemma and the suffix that 
@@ -281,7 +281,7 @@ and return it. If this strategy also fails, we return a “word not found” err
 We used two open source datasets for the Tamil dictionary component, specifically 
 \citet{ylonen_wiktextract_2022} and \citet{vasuki_dharma_nodate}.
 
-\subsection{Suffix Database Generation}
+\subsection{Suffix Database Generation} \label{sec:suffix-db-gen}
 
 The suffix database queried by the system was created using Gramble. 
 Documentation for Gramble can be found here: https://nrc-cnrc.github.io/gramble/; 
@@ -449,7 +449,7 @@ Our current bottlenecks and proposed improvements to the software can be summari
   \item Users are able to input using both the Tamil script and romanization, but the romanization input is significantly underperforming. This is because there is no romanization standard consistently followed by Tamil speakers, and so the mapping we currently employ cannot account for all possible spellings of a given Tamil word. The romanization practices of Tamil speakers are too irregular to be adequately captured by any one-to-many mapping\footnote{In fact, it is impossible. This is because the letter “n” can be mapped to \foreignlanguage{tamil}{ண}, \foreignlanguage{tamil}{ந}, or \foreignlanguage{tamil}{ன}. \foreignlanguage{tamil}{ண} is pronounced differently from \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} and so can be mapped to a distinct romanized character like “N”, but \foreignlanguage{tamil}{ந} and \foreignlanguage{tamil}{ன} are pronounced the same. They can’t usefully be mapped to distinct romanized characters because even though they appear in complementary phonological environments 90\% of the time, the remaining 10\% the distinction is lexically determined, i.e. unpredictable from just the pronunciation, and therefore not something a user who can’t read the Tamil script would be able to know.}, no matter how nuanced, and so this feature can only be improved if we are able to train a model on Tamil romanization input and/or implement an approximate search algorithm (\citealp{pine-etal-2025-zero}, \citealp{littell_waldayu_2017}).
   \item Since Kelvi was primarily designed to capture written forms, words in the spoken/informal register are underrepresented. As these words vary widely across a range of dialects, collaboration with speakers from across this span of variation would greatly enhance the coverage of our tool.
 \end{enumerate}
-Future work in this area may benefit from the use of LLMs (e.g. citealp{srinivasan-etal-2025-vidai}) to address some of these challenges; models trained on datasets that include romanized Tamil and informal Tamil, in particular, have the potential to be extremely helpful.
+Future work in this area may benefit from the use of LLMs (e.g. \citealp{srinivasan-etal-2025-vidai}) to address some of these challenges; models trained on datasets that include romanized Tamil and informal Tamil, in particular, have the potential to be extremely helpful.
 
 \section{Conclusion}
 Although Tamil has a relatively large speaker population, it is still considered a 
@@ -564,7 +564,7 @@ Sociolinguistic questions used for the exploratory interview:
 Below are the tasks given to the participants to complete with the prototype. Note that the Tamil words were presented in text; no romanization was given and facilitators did not read out the words.\\
 \begin{enumerate}
   \item Find the meaning of \foreignlanguage{tamil}{பெரியவர்களுக்கு} using the prototype interface. Try entering the word using Tamglish\footnote{Colloquial term used to refer to the code-mixing of Tamil and English in casual speech.} / English letters.
-  \item Find the meaning of \foreignlanguage{tamil}{அறிந்துகொண்டேன்} but type the word in Tamil.
+  \item Find the meaning of \newline \foreignlanguage{tamil}{அறிந்துகொண்டேன்} but type the word in Tamil.
   \item Find the meaning of \foreignlanguage{tamil}{பெருகிவிட்டால்} but use your voice. 
   \item Find the meaning of \foreignlanguage{tamil}{சிதறிவிடும்} using your preferred input method from the previous tasks.
 \end{enumerate}
