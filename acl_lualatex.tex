@@ -280,12 +280,16 @@ and return it. If this strategy also fails, we return a “word not found” err
 \subsection{Datasets}
 We used two open source datasets for the Tamil dictionary component, specifically 
 \citet{ylonen_wiktextract_2022} and \citet{vasuki_dharma_nodate}.
+\begin{figure*}[t]
+  \includegraphics[width=\textwidth]{tamil-gramble.png}
+  \caption{Excerpt from Gramble file.}
+  \label{fig:gramble-display}
+\end{figure*}
 
 \subsection{Suffix Database Generation} \label{sec:suffix-db-gen}
-
 The suffix database queried by the system was created using Gramble. 
-Documentation for Gramble can be found here: https://nrc-cnrc.github.io/gramble/; 
-in this section we limit discussion to what tiers (that are then converted into JSON attributes) 
+Documentation for Gramble can be found \href{https://nrc-cnrc.github.io/gramble/}{here}. 
+In this section we limit discussion to what tiers (that are then converted into JSON attributes) 
 we created for suffix generation and why. All attributes are string type.
 The primary attributes that every suffix entry in the suffix database have are 
 \textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
@@ -293,18 +297,14 @@ as it appears in an input word, and is the attribute that the input is
 matched against as described in the systems design (\ref{sec:suffix-matching}). 
 For instance, the input \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} ‘ghosts’ would match to the 
 suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure \ref{fig:gramble-display}. \textit{gloss} is a layman's definition of this suffix.
-\begin{figure*}[ht]
-  \includegraphics[width=\textwidth]{tamil-gramble.png}
-  \caption{Excerpt from Gramble file.}
-  \label{fig:gramble-display}
-\end{figure*}
+
 \textit{display} is the version of the matched suffix that is shown to the user: 
 this is generally the same as what is in \textit{text}, but differs in situations 
 where a suffix undergoes minor changes based on phonological environment\footnote{Using linguistic terminology, \textit{text} and \textit{display} can roughly be equated to \textit{surface form} and \textit{underlying representation} respectively.}. 
 For example, the plural suffix \foreignlanguage{tamil}{கள்} \textit{gaL} can also also appear as \foreignlanguage{tamil}{க்கள்} \textit{kkaL} or 
 \foreignlanguage{tamil}{ங்கள்} \textit{ngaL} based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its prototypical
 form, this is the form of the suffix that is shown (“displayed”) to the 
-user in all cases, as shown in Figure \ref{fig:gramble-display}. Finally, add-back is used as a 
+user in all cases, as shown in Figure \ref{fig:ui-puthamkal}. Finally, add-back is used as a 
 secondary lemmatizer when the primary fails, as detailed above in section \ref{sec:suffix-matching}. 
 In this instance, if the lemmatizer were unable to parse \foreignlanguage{tamil}{பூதங்கள்}, 
 once the suffix match \foreignlanguage{tamil}{ங்கள்} was identified and removed from the input, 
@@ -318,13 +318,13 @@ the valid lemma \foreignlanguage{tamil}{பூதம்} \textit{bootham} (‘gh
 
 \section{Results}
 \subsection{Systems Analysis}
-Due to limited resources and time (discussed in section ref{sec:limitations}), 
+Due to limited resources and time (discussed in section \ref{sec:limitations}), 
 we have not yet been able to perform a formal statistical evaluation. 
 The minimal test set that was used to evaluate performance so far is 
 composed of “edge-case” words, or words we predicted may be tricky to 
 parse based on how our model is constructed. For instance, during early 
 development, we noticed that the Stanford NLP lemmatizer often fails on 
-class III verbs (as defined in Arden 1910), so we made sure to explicitly 
+class III verbs (as defined in \citealp{arden_progressive_1910}), so we made sure to explicitly 
 compensate for this during the suffix generation process using Gramble, 
 and included several words from this category as part of our testing. 
 Since we observed the remaining four verb classes \citep{arden_progressive_1910} being 
@@ -469,7 +469,7 @@ experienced by learners. The code and data used for the project
 is open source and will hopefully benefit other individuals and 
 organizations looking to create language learning resources. 
 
-\section{Limitations}\label{sec:limitations}
+\section{Limitations} \label{sec:limitations}
 The project received funding (\$10,000 CAD) and had a 1 year deadline 
 as per the agreement for the funding. Unfortunately, the cost of many 
 high quality Tamil dictionary datasets far exceeded the available funding 
