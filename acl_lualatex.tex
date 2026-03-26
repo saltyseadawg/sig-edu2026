@@ -186,7 +186,7 @@ used Google Translate’s TTS feature to hear the word and would then be able to
 On the other hand, IP would use Google Translate to get a Tamil word’s romanization which they would 
 then input into the Google search engine to try to find different contexts and uses of the word. 
 For the participants who did rely on the translations provided by Google Translate, 
-several commented that they knew its translations weren't necessarily trustworthy. Interestingly, none of our participants mentioned using generative AI tools,
+several commented that Google's translations were not always trustworthy. Interestingly, none of our participants mentioned using generative AI tools,
 however this could be due to the fact that most of our participants were over the age of 25. 
 As \citet{MAGOTRA201681} notes, younger individuals are more likely to 
 adopt new technologies compared to older individuals.\\
@@ -247,6 +247,11 @@ rote memorization of word definitions.
 
 
 In this section we discuss the different components of Kelvi and how they interact. 
+
+\subsection{Datasets}
+We used two open source datasets for the Tamil dictionary component, specifically 
+\citet{ylonen_wiktextract_2022} and \citet{vasuki_dharma_nodate}.
+
 \subsection{Romanized/Tamil Input} \label{sec:romanization}
 Users can input using the Tamil script or romanization (i.e., \foreignlanguage{tamil}{கேள்வி} or \textit{kelvi}). 
 All of the dictionary and morphological data is stored in the Tamil script, 
@@ -271,7 +276,7 @@ employed to identify the lemma, such as suffix matching.
 \subsection{Suffix Matching} \label{sec:suffix-matching}
 To identify the potential suffix(es) on an input word, a backwards 
 search is performed on the input to see if there is a match with 
-any suffix included in the Gramble JSON file (generation of this file is discussed in \ref{sec:suffix-db-gen}). If there are multiple matches, 
+any suffix included in the Gramble JSON file (generation of this file is discussed in Section \ref{sec:suffix-db-gen}). If there are multiple matches, 
 the longest one (whose length is less than the length of the input) is 
 selected. If a valid lemma was found using the lemmatization process 
 described previously, we return both the lemma and the suffix that 
@@ -287,15 +292,11 @@ If the “add-back” field is non-empty, we add this material
 to the potential lemma, confirm if this is now a valid lemma, 
 and return it. If this strategy also fails, we return a “word not found” error to the user.
 
-\subsection{Datasets}
-We used two open source datasets for the Tamil dictionary component, specifically 
-\citet{ylonen_wiktextract_2022} and \citet{vasuki_dharma_nodate}.
-
 \subsection{Suffix Database Generation} \label{sec:suffix-db-gen}
 The suffix database queried by the system was created using Gramble. 
 Documentation for Gramble can be found \href{https://nrc-cnrc.github.io/gramble/}{here}. 
 In this section we limit discussion to what tiers (that are then converted into JSON attributes) 
-we created for suffix generation and why. All attributes are string type.
+we created for suffix generation and why.
 The primary attributes that every suffix entry in the suffix database have are 
 \textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
 as it appears in an input word, and is the attribute that the input is 
