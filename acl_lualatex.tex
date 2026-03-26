@@ -5,7 +5,7 @@
 % Change "review" to "final" to generate the final (sometimes called camera-ready) version.
 % Change to "preprint" to generate a non-anonymous version with page numbers.
 \usepackage[review]{acl}
-
+\usepackage[mathlines]{lineno}
 % This is not strictly necessary, and may be commented out,
 % but it will improve the layout of the manuscript,
 % and will typically save some space.
@@ -92,7 +92,8 @@ Two of the main complicating features of Tamil literacy are the language’s hea
 Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. 
 See Figure (\ref{fig:kelvi-example}), where a complete utterance is expressed as one word. \\
 \begin{figure}[t]
-  \includegraphics[width=\columnwidth]{kelvi-example.png}
+  \center
+  \fbox{\includegraphics[width=0.9\columnwidth]{kelvi-example.png}}
   \caption{Tamil word as it appears in Kelvi}
   \label{fig:kelvi-example}
 \end{figure}
@@ -146,11 +147,12 @@ with no Tamil background. Importantly, oral fluency and literacy were not correl
 In other words, speakers that were fluent in Tamil were not necessarily strong readers. 
 As shown in Figure \ref{fig:tamil-fluency-literacy}, most of the participants had stronger oral abilities compared to reading and writing. 
 
-\begin{figure}[t]
-  \includegraphics[width=\columnwidth]{tamil-fluency-literacy.png}
+\begin{figure*}[t]
+  \center
+  \includegraphics[width=1.1\columnwidth]{tamil-fluency-literacy.png}
   \caption{Graph displaying participants' self-described fluency and literacy in Tamil.}
   \label{fig:tamil-fluency-literacy}
-\end{figure}
+\end{figure*}
 
 \subsection{Exploratory Interview}
 At the beginning of the session, participants were asked to self-describe their 
@@ -189,16 +191,16 @@ however this could be due to the fact that most of our participants were over th
 As \citet{MAGOTRA201681} notes, younger individuals are more likely to 
 adopt new technologies compared to older individuals.\\
 \begin{figure}[ht]
-  \includegraphics[width=\columnwidth]{graph-lookup.png}
-  \caption{Graph of participants' methods for looking up Tamil words.}
+  \includegraphics[width=\columnwidth]{graph-lookup}
+  \caption{Graph of participants' methods for looking up Tamil words. Google Translate is the most common at 8 votes, while the five other remaining choices have 3 votes or less.}
   \label{fig:graph-lookup}
 \end{figure}
 
 When asked if they would use this tool, seven participants responded with yes, two responded with no, and one with maybe.  
 %insert image
 \begin{figure}[ht]
-  \includegraphics[width=\columnwidth]{graph-use-tool.png}
-  \caption{Graph of participants' responses to if they would use a tool like the prototype.}
+  \includegraphics[width=\columnwidth]{graph-use-tool}
+  \caption{Graph of participants' responses to if they would use a tool like the prototype. Out of 10 participants, 7 responded `yes', 1 responded `maybe', and 2 responded `no'.}
   \label{fig:graph-use-tool}
 \end{figure}
 SM, who is fluent with weak literacy skills, stated they would not use the tool. 
@@ -232,11 +234,11 @@ arbitrarily memorizing definitions of Tamil words.
 
 \section{Systems Design} \label{sec:systems-design}
 In this section we discuss the different components of Kelvi and how they interact. 
-\begin{figure}[ht]
+\begin{figure*}[b]
   \includegraphics[width=\columnwidth]{system-diagram.png}
   \caption{Diagram of Kelvi's backend and frontend.}
   \label{fig:sys-diagram}
-\end{figure}
+\end{figure*}
 \subsection{Romanized/Tamil Input} \label{sec:romanization}
 Users can input using the Tamil script or romanization (i.e., \foreignlanguage{tamil}{கேள்வி} or \textit{kelvi}). 
 All of the dictionary and morphological data is stored in the Tamil script, 
@@ -311,7 +313,8 @@ once the suffix match \foreignlanguage{tamil}{ங்கள்} was identified an
 the character \foreignlanguage{tamil}{ம்} (m) would then be “added back” to this new form to create 
 the valid lemma \foreignlanguage{tamil}{பூதம்} \textit{bootham} (‘ghost’). 
 \begin{figure}[t]
-  \includegraphics[width=\columnwidth]{puthamkal.png}
+  \center
+  \fbox{\includegraphics[width=0.9\columnwidth]{puthamkal.png}}
   \caption{Kelvi UI when given \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} as input.}
   \label{fig:ui-puthamkal}
 \end{figure}
@@ -339,15 +342,17 @@ as once we confirmed that a sample few were working, we assumed others of the
 type would also be relatively high performing. Of course, formalized 
 random testing is required to verify this. A high level overview of the 
 tool’s performance on this test set is shown in Table \ref{tab:1}.
+
 \begin{table}[ht]
+  \center
   \begin{tabular}{c|c|c}
     Result & \# of Tokens & Percentage\\
     \hline
-    correct & 141 & 50\% \\
-    incorrect & 46 & 16\% \\
-    no result & 93 & 33\% \\
+    Correct & 141 & 50\% \\
+    Incorrect & 46 & 16\% \\
+    No result & 93 & 33\% \\
     \hline
-    total & \textbf{280} & \\
+    Total & \textbf{280} & \\
   \end{tabular}
   \caption{Performance of Kelvi on test input words}
   \label{tab:1}
@@ -356,6 +361,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
 We primarily tested for presence of lemmas in our dictionary data (shown in Table \ref{tab:unconjugated}), 
 and accurate lemmatization and suffix identification (shown in Table \ref{tab:conjugated}).
 \begin{table}[ht]
+  \center
   \begin{tabular}{c|c|c}
     Result & \# of Tokens & Percentage\\
     \hline
@@ -370,6 +376,7 @@ and accurate lemmatization and suffix identification (shown in Table \ref{tab:co
 \end{table}
 
 \begin{table}[ht]
+  \center
   \begin{tabular}{c|c|c}
      & \# of Tokens & Percentage\\
     \hline
@@ -389,6 +396,7 @@ and which were failing because our tool was not able to lemmatize the word,
 as shown in Table \ref{tab:no-result}. 
 % had to shorten issues because they overflow the column otherwise
 \begin{table}[ht]
+  \center
   \begin{tabular}{c|c|c}
     Issue & \# of Tokens & Percentage\\
     \hline
@@ -412,6 +420,7 @@ For inputs that produced incorrect outputs, we differentiated between
 whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-incorrect}). 
 % both incorrect or else overflow ugly issue
 \begin{table}[ht]
+  \center
   \begin{tabular}{c|c|c}
     Issue & \# of Tokens & Percentage\\
     \hline
