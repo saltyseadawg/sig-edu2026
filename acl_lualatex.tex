@@ -44,6 +44,7 @@
 \graphicspath{ {./images/} }
 
 \usepackage{hyperref}
+\usepackage{float}
 
 \title{Kelvi: a “pedagogical” morphological parser to support Tamil literacy}
 
@@ -125,15 +126,14 @@ For Tamil specifically there exist technical and/or academic tools such as a lem
 a morphological analyser \citep{sarveswaran_thamizhimorph_2021},  and a stemmer \citep{rajalingam_rdamodharantamil-stemmer_2025}, as well as some 
 pedagogical resources like a dictionary of Tamil verbs \citep{schiffman_english_2009} and a few 
 isolated courses/course materials (\citealp{annamalai_colloquial_2002}, \citealp{prasad_tamil_2025}, \citealp{cheran_learn_2001}); 
-but to the authors’ knowledge there is currently no freely available online resource that employs Tamil NLP, 
-specifically morphological analysis, for the purpose of pedagogy.
+but to the authors' knowledge there is no other free-to-use pedagogical resource which employs a Tamil morphological analyser.
 
 \section{Methods}
-In accordance with principles behind collaborative community based research \citep{bucholtz_community-centered_2021} and user centered design methods \citep{wallisch_overcoming_2019}, 
+In accordance with principles behind collaborative community based research \citep{bucholtz_community-centered_2021} and user-centered design methods \citep{wallisch_overcoming_2019}, 
 we involved target users early on in our explorations of the problem space to ensure we were 1) Solving a real issue faced by Tamil learners and 2) Providing a solution that learners would want to adopt. 
 We wanted to understand what bottlenecks users were currently facing when searching for Tamil word definitions as well as existing paint points they were experiencing. 
 
-\subsection{Prototype}
+\subsection{Prototype Design}
 We built a medium fidelity prototype in Figma, an interface design tool, to test our design (accessible \href{https://www.figma.com/proto/1tpcdO49QkVfDOQYSrZ5YH/Tamil-Dict-Design-updated?node-id=5-288&starting-point-node-id=5%3A288&t=XY9IO1vT16vxJg0e-1}{here}). 
 We wanted to know whether a) users would be able to determine the meaning 
 of a word when presented with the morphological breakdown and if 
@@ -143,15 +143,15 @@ c) if users would use the tool if it existed.
 \subsection{Participants}
 To determine our design requirements, we interviewed 10 Tamil adult speakers over the age of 20
 who were asked to self describe Tamil language abilities in terms of oral fluency and literacy. 
-Of our participants, 3 were native speakers, 6 were heritage speakers, and one was an L2 learner 
+Of our participants, three were native speakers, six were heritage speakers, and one was an L2 learner 
 with no Tamil background. Importantly, oral fluency and literacy were not correlated for our speakers. 
 In other words, speakers that were fluent in Tamil were not necessarily strong readers. 
 As shown in Figure \ref{fig:tamil-fluency-literacy}, most of the participants had stronger oral abilities compared to reading and writing. 
 
 \begin{figure*}[t]
   \center
-  \includegraphics[width=1.1\columnwidth]{tamil-fluency-literacy.png}
-  \caption{Graph displaying participants' self-described fluency and literacy in Tamil.}
+  \includegraphics[width=1.5\columnwidth]{tamil-fluency-literacy.pdf}
+  \caption{The X-axis represents fluency while the Y-axis represents literacy, forming four quadrants. 6/10 participants fall in the <fluent, high literacy> quadrant, 2/10 participants fall in the <low literacy, non fluent> quadrant, and 2/10 participants fall in the <low literacy, fluent> quadrant.  Oral fluency and literacy were thus not correlated among our participants.}
   \label{fig:tamil-fluency-literacy}
 \end{figure*}
 
@@ -164,12 +164,11 @@ such as level of education, language of instruction, domains of use of their lan
 is important to understanding a heritage speaker’s ability in their heritage language.
 Although the answers to these questions were mostly used to corroborate the 
 responder’s self description of their Tamil abilities and not used for any formal analyses, 
-the questions themselves have been included in the appendix for future researchers. 
+the questions themselves have been included in the Appendix for future researchers. 
 \\
 Users were then asked to complete four tasks to test the usability of the prototype’s UI as well as input methods, 
 which can also be found in the appendices. 
-
-After completion of the tasks, users were asked the following questions:
+After completion of the tasks, users were asked the following questions:\\
 \begin{itemize}
   \item What do you like/dislike about this tool?
   \item What features do you wish existed?
@@ -188,18 +187,16 @@ On the other hand, IP would use Google Translate to get a Tamil word’s romaniz
 then input into the Google search engine to try to find different contexts and uses of the word. 
 For the participants who did rely on the translations provided by Google Translate, 
 several commented that they knew its translations weren't necessarily trustworthy. Interestingly, none of our participants mentioned using generative AI tools,
-however this could be due to the fact that most of our participants were over the age of twenty-five. 
+however this could be due to the fact that most of our participants were over the age of 25. 
 As \citet{MAGOTRA201681} notes, younger individuals are more likely to 
 adopt new technologies compared to older individuals.\\
 \begin{figure}[ht]
   \includegraphics[width=\columnwidth]{graph-lookup}
   \caption{Graph of participants' methods for looking up Tamil words. Google Translate is the most common at 8 votes, while the five other remaining choices have 3 votes or less.}
   \label{fig:graph-lookup}
-  \vspace{-4em}
+  % \vspace{-4em}
 \end{figure}
-
 When asked if they would use this tool, seven participants responded with yes, two responded with no, and one with maybe.  
-%insert image
 \begin{figure}[ht]
   \includegraphics[width=\columnwidth]{graph-use-tool}
   \caption{Graph of participants' responses to if they would use a tool like the prototype. Out of 10 participants, 7 responded `yes', 1 responded `maybe', and 2 responded `no'.}
@@ -228,7 +225,7 @@ following user requirements to guide the design of the website.
 We also drew inspiration from the Kawennon:nis verb conjugator for 
 Kanyen'keha \citep{kazantseva_kawennonnis_2018} and its aim to 
 assist users in acquiring morphology patterns rather than 
-arbitrarily memorizing definitions of Tamil words. 
+rote memorization of word definitions. 
 \begin{enumerate}
   \item Intuitively understand the morphological breakdown even as an L2 learner.
   \item Not overwhelm a beginner learner. 
@@ -236,12 +233,20 @@ arbitrarily memorizing definitions of Tamil words.
 \end{enumerate}
 
 \section{Systems Design} \label{sec:systems-design}
-In this section we discuss the different components of Kelvi and how they interact. 
-\begin{figure}[b]
-  \includegraphics[width=\columnwidth]{system-diagram.png}
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=1.5\columnwidth]{system-diagram.png}
   \caption{Diagram of Kelvi's backend and frontend.}
   \label{fig:sys-diagram}
-\end{figure}
+\end{figure*}
+\begin{figure*}[t]
+  \includegraphics[width=\textwidth]{tamil-gramble.png}
+  \caption{Excerpt from Gramble file.}
+  \label{fig:gramble-display}
+\end{figure*}
+
+
+In this section we discuss the different components of Kelvi and how they interact. 
 \subsection{Romanized/Tamil Input} \label{sec:romanization}
 Users can input using the Tamil script or romanization (i.e., \foreignlanguage{tamil}{கேள்வி} or \textit{kelvi}). 
 All of the dictionary and morphological data is stored in the Tamil script, 
@@ -285,11 +290,6 @@ and return it. If this strategy also fails, we return a “word not found” err
 \subsection{Datasets}
 We used two open source datasets for the Tamil dictionary component, specifically 
 \citet{ylonen_wiktextract_2022} and \citet{vasuki_dharma_nodate}.
-\begin{figure*}[t]
-  \includegraphics[width=\textwidth]{tamil-gramble.png}
-  \caption{Excerpt from Gramble file.}
-  \label{fig:gramble-display}
-\end{figure*}
 
 \subsection{Suffix Database Generation} \label{sec:suffix-db-gen}
 The suffix database queried by the system was created using Gramble. 
@@ -315,12 +315,13 @@ In this instance, if the lemmatizer were unable to parse \foreignlanguage{tamil}
 once the suffix match \foreignlanguage{tamil}{ங்கள்} was identified and removed from the input, 
 the character \foreignlanguage{tamil}{ம்} (m) would then be “added back” to this new form to create 
 the valid lemma \foreignlanguage{tamil}{பூதம்} \textit{bootham} (‘ghost’). 
-\begin{figure}[t]
+\begin{figure}[h]
   \center
   \fbox{\includegraphics[width=0.7\columnwidth]{puthamkal.png}}
   \caption{Kelvi UI when given \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} as input.}
   \label{fig:ui-puthamkal}
-  \vspace{-1.4em}
+  % \vspace{-1.4em}
+  \vspace{-4em}
 \end{figure}
 
 \section{Results}
@@ -360,6 +361,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
   \end{tabular}
   \caption{Performance of Kelvi on test input words}
   \label{tab:1}
+  \vspace{-4em}
 \end{table}
 
 We primarily tested for presence of lemmas in our dictionary data (shown in Table \ref{tab:unconjugated}), 
@@ -377,6 +379,7 @@ and accurate lemmatization and suffix identification (shown in Table \ref{tab:co
   \end{tabular}
   \caption{Kelvi performance on inputs with no affixes}
   \label{tab:unconjugated}
+  \vspace{-1.4em}
 \end{table}
 
 \begin{table}[ht]
@@ -397,21 +400,22 @@ and accurate lemmatization and suffix identification (shown in Table \ref{tab:co
 For inputs that produced a “word not found” error, we isolated which were 
 failing because the lemma itself was not present in our dictionary data, 
 and which were failing because our tool was not able to lemmatize the word, 
-as shown in Table \ref{tab:no-result}. 
+as shown in Table \ref{tab:no-result}.
+% can't move table right after ^ paragraph because it messes up the foot note :/
 % had to shorten issues because they overflow the column otherwise
 \begin{table}[ht]
   \center
   \begin{tabular}{c|c|c}
     Issue & \# of Tokens & Percentage\\
     \hline
-    Lemma not in dataset & 10 & 11\% \\
-    Failed lemmatization & 79 & 89\% \\
+    Lemma not in data & 10 & 11\% \\
+    Bad lemmatization & 79 & 89\% \\
     \hline
     Total & \textbf{89} & \\
   \end{tabular}
   \caption{Cause for "word not found" errors on inputs with affixes}
   \label{tab:no-result}
-  \vspace{-4em}
+  \vspace{-1.2em}
 \end{table}
 
 This delineation will help us isolate which types of 
@@ -424,6 +428,7 @@ productive process of forming novel compounds\footnote{For example, the poetic w
 For inputs that produced incorrect outputs, we differentiated between 
 whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-incorrect}). 
 % both incorrect or else overflow ugly issue
+
 \begin{table}[ht]
   \center
   \begin{tabular}{c|c|c}
@@ -437,7 +442,7 @@ whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-i
   \end{tabular}
   \caption{Types of errors on inputs with affixes}
   \label{tab:output-incorrect}
-
+  \vspace{-4em}
 \end{table}
 The results from Tables \ref{tab:no-result} and \ref{tab:output-incorrect} in particular highlight that more 
 work can be done in improving the suffix database, both to increase 
@@ -479,7 +484,7 @@ Although there is room for improvement in terms of coverage and accuracy,
 we hope that Kelvi serves as an example of a grassroots initiative that, 
 despite limitations in terms of language data and resources, 
 is able to create a useful language learning tool by 
-taking a user centered approach and targeting common pain points 
+taking a user-centered approach and targeting common pain points 
 experienced by learners. The code and data used for the project 
 is open source and will hopefully benefit other individuals and 
 organizations looking to create language learning resources. 
