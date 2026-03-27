@@ -82,7 +82,7 @@
 In this paper we discuss the development of Kelvi\footnote{url redacted for anonymity}, an open source web-based dictionary and morphological parser designed to aid Tamil learners in developing their literacy skills. 
 Tamil is an agglutinative language and heavily suffixal. Existing Tamil dictionaries only carry stems, not conjugated or inflected forms, and for a beginner learner of the language, isolating the stem in an unfamiliar word can be very challenging. 
 Kelvi provides 1) the stem of any input word alongside its definition, and 2) non-technical descriptions of any suffixes that are part of this input, so that learners will gradually start to recognize these suffixes and be able to understand and produce new Tamil words themselves. 
-We also hope to show that Kelvi can be adapted for other languages and has the potential to be a useful pedagogical aid for learner literacy development, especially for agglutinative and/or polysynthetic languages which tend to be otherwise underserved in the mainstream.
+In detailing our process of collaborative research, user interviews, suffix database creation, and error analysis, we also hope to show that Kelvi can be adapted for other languages and has the potential to be a useful pedagogical aid for learner literacy development, especially for agglutinative and/or polysynthetic languages which tend to be otherwise underserved in the mainstream.
 \end{abstract}
 
 
@@ -109,20 +109,20 @@ only their lemmas do (consider how “go” can be found in an English dictionar
 Learners then face the “dictionary problem”; to summarize \citet{littell_waldayu_2017}, 
 dictionaries are intended to be a tool for language learners, but paradoxically require knowledge of the language to use; 
 in this case, knowledge of what the “dictionary form” or lemma of an unfamiliar word is. 
-The tool we built, Kelvi, is a web-based dictionary and morphological parser that helps the learner who comes 
+To address this issue we built, Kelvi, a web-based dictionary and morphological parser that helps a learner who comes 
 across an intimidatingly long Tamil word see how the word is broken down, and what each “part” (morpheme) means 
-in layman terms, so that they come away with a fuller understanding of the word while hopefully also starting to 
+in layman terms. The hope is that they come away with a fuller understanding of the word while also starting to 
 recognize Tamil morphological patterns themselves.
 
 \section{Literature Review}
-The one specific instance known to these authors of a dictionary specifically designed for a heritage/minoritized 
+The one instance known to these authors of a dictionary specifically designed for a heritage/minoritized 
 language that also provides pedagogical information about morphology is the ongoing work on the 
 digital Wendat Dictionary \citep{lukaniec_modern_2023}. 
 More broadly speaking, there are several open-source technologies that have been developed to 
 support language revitalization and maintenance efforts \citep{brinklow_indigenous_nodate}, 
 such as the dictionary-builder Mother Tongues \citep{littell_waldayu_2017} and the 
 morphological generator Gramble \citep{littell_gramble_2024} that was used in a pedagogical context for Oneida \citep{lu-etal-2024-empowering}. 
-For Tamil specifically there exist technical and/or academic tools such as a lemmatizer \citep{qi2020stanza}, 
+For Tamil specifically there exist tools such as a lemmatizer \citep{qi2020stanza}, 
 a morphological analyser \citep{sarveswaran_thamizhimorph_2021},  and a stemmer \citep{rajalingam_rdamodharantamil-stemmer_2025}, as well as some 
 pedagogical resources like a dictionary of Tamil verbs \citep{schiffman_english_2009} and a few 
 isolated courses/course materials (\citealp{annamalai_colloquial_2002}, \citealp{prasad_tamil_2025}, \citealp{cheran_learn_2001}); 
@@ -201,7 +201,7 @@ When asked if they would use this tool, seven participants responded with yes, t
   \includegraphics[width=\columnwidth]{graph-use-tool}
   \caption{Graph of participants' responses to if they would use a tool like the prototype. Out of 10 participants, 7 responded `yes', 1 responded `maybe', and 2 responded `no'.}
   \label{fig:graph-use-tool}
-  \vspace{-4em}
+  % \vspace{-4em}
 \end{figure}
 SM, who is fluent with weak literacy skills, stated they would not use the tool. 
 TB, who is a beginner heritage speaker that cannot read, stated the reason behind 
@@ -252,6 +252,39 @@ In this section we discuss the different components of Kelvi and how they intera
 We used two open source datasets for the Tamil dictionary component, specifically 
 \citet{ylonen_wiktextract_2022} and \citet{vasuki_dharma_nodate}.
 
+\subsection{Suffix Database Generation} \label{sec:suffix-db-gen}
+The suffix database queried by the system was created using Gramble. 
+Documentation for Gramble can be found \href{https://nrc-cnrc.github.io/gramble/}{here}. 
+In this section we limit discussion to what tiers (that are then converted into JSON attributes) 
+we created for suffix generation and why.
+The primary attributes that every suffix entry in the suffix database have are 
+\textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
+as it appears in an input word, and is the attribute that the input is 
+matched against. 
+For instance, the input \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} ‘ghosts’ would match to the 
+suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure \ref{fig:gramble-display}. \textit{gloss} is a layman's definition of this suffix.
+
+\textit{display} is the version of the matched suffix that is shown to the user: 
+this is generally the same as what is in \textit{text}, but differs in situations 
+where a suffix undergoes minor changes based on phonological environment\footnote{Using linguistic terminology, \textit{text} and \textit{display} can roughly be equated to \textit{surface form} and \textit{underlying representation} respectively.}. 
+For example, the plural suffix \foreignlanguage{tamil}{கள்} \textit{gaL} can also also appear as \foreignlanguage{tamil}{க்கள்} \textit{kkaL} or 
+\foreignlanguage{tamil}{ங்கள்} \textit{ngaL} based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its prototypical
+form, this is the form of the suffix that is shown (“displayed”) to the 
+user in all cases, as shown in Figure \ref{fig:ui-puthamkal}. Finally, \textit{add-back} is used as a 
+secondary lemmatizer when the primary fails, to be detailed later in Section \ref{sec:suffix-matching}. 
+In this instance, if the lemmatizer were unable to parse \foreignlanguage{tamil}{பூதங்கள்}, 
+once the suffix match \foreignlanguage{tamil}{ங்கள்} was identified and removed from the input, 
+the character \foreignlanguage{tamil}{ம்} (m) would then be “added back” to this new form to create 
+the valid lemma \foreignlanguage{tamil}{பூதம்} \textit{bootham} (‘ghost’). 
+\begin{figure}[h]
+  \center
+  \fbox{\includegraphics[width=0.7\columnwidth]{puthamkal.png}}
+  \caption{Kelvi UI when given \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} as input.}
+  \label{fig:ui-puthamkal}
+  % \vspace{-1.4em}
+  % \vspace{-4em}
+\end{figure}
+
 \subsection{Romanized/Tamil Input} \label{sec:romanization}
 Users can input using the Tamil script or romanization (i.e., \foreignlanguage{tamil}{கேள்வி} or \textit{kelvi}). 
 All of the dictionary and morphological data is stored in the Tamil script, 
@@ -267,7 +300,7 @@ The romanization system used here is a combination of commonly used
 spelling conventions and IPA.
 
 \subsection{Lemmatization}
-Where possible, lemmatization of the Tamilinput is performed using 
+Where possible, lemmatization of the Tamil input is performed using 
 Stanza \citep{qi2020stanza}. The output lemma is then checked 
 against the dictionary data to see if it is an existing headword. 
 If no valid dictionary entry is found, other strategies are 
@@ -276,7 +309,7 @@ employed to identify the lemma, such as suffix matching.
 \subsection{Suffix Matching} \label{sec:suffix-matching}
 To identify the potential suffix(es) on an input word, a backwards 
 search is performed on the input to see if there is a match with 
-any suffix included in the Gramble JSON file (generation of this file is discussed in Section \ref{sec:suffix-db-gen}). If there are multiple matches, 
+any suffix included in the Gramble JSON file (generation of this file was discussed in Section \ref{sec:suffix-db-gen}). If there are multiple matches, 
 the longest one (whose length is less than the length of the input) is 
 selected. If a valid lemma was found using the lemmatization process 
 described previously, we return both the lemma and the suffix that 
@@ -286,48 +319,15 @@ If the potential lemma is now a valid lemma, (i.e., exists in the
 dictionary data as a headword), we return this alongside the suffix 
 as the output to the user. If the potential lemma is still not a valid 
 lemma, we check if the suffix that we found in the Gramble JSON has any 
-material in its “add-back” field: this field contains phonological 
+material in its \textit{add-back} field: this field contains phonological 
 information that needs to be added to a stem in order to turn it into a lemma. 
-If the “add-back” field is non-empty, we add this material 
+If the \textit{add-back} field is non-empty, we add this material 
 to the potential lemma, confirm if this is now a valid lemma, 
 and return it. If this strategy also fails, we return a “word not found” error to the user.
 
-\subsection{Suffix Database Generation} \label{sec:suffix-db-gen}
-The suffix database queried by the system was created using Gramble. 
-Documentation for Gramble can be found \href{https://nrc-cnrc.github.io/gramble/}{here}. 
-In this section we limit discussion to what tiers (that are then converted into JSON attributes) 
-we created for suffix generation and why.
-The primary attributes that every suffix entry in the suffix database have are 
-\textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
-as it appears in an input word, and is the attribute that the input is 
-matched against as described in the systems design (\ref{sec:suffix-matching}). 
-For instance, the input \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} ‘ghosts’ would match to the 
-suffix \foreignlanguage{tamil}{ங்கள்} \textit{ngaL}, as shown in Figure \ref{fig:gramble-display}. \textit{gloss} is a layman's definition of this suffix.
-
-\textit{display} is the version of the matched suffix that is shown to the user: 
-this is generally the same as what is in \textit{text}, but differs in situations 
-where a suffix undergoes minor changes based on phonological environment\footnote{Using linguistic terminology, \textit{text} and \textit{display} can roughly be equated to \textit{surface form} and \textit{underlying representation} respectively.}. 
-For example, the plural suffix \foreignlanguage{tamil}{கள்} \textit{gaL} can also also appear as \foreignlanguage{tamil}{க்கள்} \textit{kkaL} or 
-\foreignlanguage{tamil}{ங்கள்} \textit{ngaL} based on the sound it is preceded by, but since \foreignlanguage{tamil}{கள்} is its prototypical
-form, this is the form of the suffix that is shown (“displayed”) to the 
-user in all cases, as shown in Figure \ref{fig:ui-puthamkal}. Finally, add-back is used as a 
-secondary lemmatizer when the primary fails, as detailed above in section \ref{sec:suffix-matching}. 
-In this instance, if the lemmatizer were unable to parse \foreignlanguage{tamil}{பூதங்கள்}, 
-once the suffix match \foreignlanguage{tamil}{ங்கள்} was identified and removed from the input, 
-the character \foreignlanguage{tamil}{ம்} (m) would then be “added back” to this new form to create 
-the valid lemma \foreignlanguage{tamil}{பூதம்} \textit{bootham} (‘ghost’). 
-\begin{figure}[h]
-  \center
-  \fbox{\includegraphics[width=0.7\columnwidth]{puthamkal.png}}
-  \caption{Kelvi UI when given \foreignlanguage{tamil}{பூதங்கள்} \textit{boothangaL} as input.}
-  \label{fig:ui-puthamkal}
-  % \vspace{-1.4em}
-  \vspace{-4em}
-\end{figure}
-
 \section{Results}
 \subsection{Systems Analysis}
-Due to limited resources and time (discussed in section \ref{sec:limitations}), 
+Due to limited resources and time (discussed in Section \ref{sec:limitations}), 
 we have not yet been able to perform a formal statistical evaluation. 
 The minimal test set that was used to evaluate performance so far is 
 composed of “edge-case” words, or words we predicted may be tricky to 
@@ -336,7 +336,7 @@ development, we noticed that the Stanford NLP lemmatizer often fails on
 class III verbs (as defined in \citealp{arden_progressive_1910}), so we made sure to explicitly 
 compensate for this during the suffix generation process using Gramble, 
 and included several words from this category as part of our testing. 
-Since we observed the remaining four verb classes \citep{arden_progressive_1910} being 
+Since we observed the remaining six verb classes \citep{arden_progressive_1910} being 
 accurately lemmatized, fewer of these are represented in our test set 
 as they were assumed to be higher performing. Similarly, there is a 
 higher proportion of words with complex morphophonology and suffixal 
@@ -362,7 +362,7 @@ tool’s performance on this test set is shown in Table \ref{tab:1}.
   \end{tabular}
   \caption{Performance of Kelvi on test input words}
   \label{tab:1}
-  \vspace{-4em}
+  % \vspace{-4em}
 \end{table}
 
 We primarily tested for presence of lemmas in our dictionary data (shown in Table \ref{tab:unconjugated}), 
@@ -416,7 +416,7 @@ as shown in Table \ref{tab:no-result}.
   \end{tabular}
   \caption{Cause for "word not found" errors on inputs with affixes}
   \label{tab:no-result}
-  \vspace{-1.2em}
+  \vspace{-4em}
 \end{table}
 
 This delineation will help us isolate which types of 
@@ -443,7 +443,7 @@ whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-i
   \end{tabular}
   \caption{Types of errors on inputs with affixes}
   \label{tab:output-incorrect}
-  \vspace{-4em}
+  % \vspace{-4em}
 \end{table}
 The results from Tables \ref{tab:no-result} and \ref{tab:output-incorrect} in particular highlight that more 
 work can be done in improving the suffix database, both to increase 
