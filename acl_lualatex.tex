@@ -91,7 +91,7 @@ Tamil is a Dravidian language spoken in south and southeast Asia. It has officia
 The diaspora population in Canada largely consists of heritage speakers - that is to say, people who grow up hearing their family speak Tamil, but aren’t necessarily entirely fluent themselves \citep{polinsky_heritage_2007}. 
 Two of the main complicating features of Tamil literacy are the language’s heavily diglossic nature and its agglutinative properties. 
 Tamil is heavily suffixal, with most grammatical information expressed either as nominal or verbal suffixes. 
-See Figure \ref{fig:kelvi-example}, where a complete utterance is expressed as one word. \\
+See Figure \ref{fig:kelvi-example}, where a complete utterance is expressed as one word.
 \begin{figure}[t]
   \center
   \fbox{\includegraphics[width=0.9\columnwidth]{kelvi-example.png}}
@@ -99,6 +99,7 @@ See Figure \ref{fig:kelvi-example}, where a complete utterance is expressed as o
   \label{fig:kelvi-example}
   \vspace{-4em}
 \end{figure}
+
 In written Tamil the higher, formal register is used, where every suffix is phonologically expressed in its entirety. 
 In the colloquial spoken register, however, Tamil words undergo massive phonological reduction, 
 so that many sounds that are fully expressed in the written form of a word aren’t actually pronounced (\citealp{annamalai_modern_2019}; \citealp{renganathan_heritage_2019}). 
@@ -125,7 +126,7 @@ morphological generator Gramble \citep{littell_gramble_2024} that was used in a 
 For Tamil specifically there exist tools such as a lemmatizer \citep{qi2020stanza}, 
 a morphological analyser \citep{sarveswaran_thamizhimorph_2021},  and a stemmer \citep{rajalingam_rdamodharantamil-stemmer_2025}, as well as some 
 pedagogical resources like a dictionary of Tamil verbs \citep{schiffman_english_2009} and a few 
-isolated courses/course materials (\citealp{annamalai_colloquial_2002}, \citealp{prasad_tamil_2025}, \citealp{cheran_learn_2001}); 
+isolated courses/course materials (\citealp{annamalai_colloquial_2002}; \citealp{prasad_tamil_2025}; \citealp{cheran_learn_2001}); 
 but to the authors' knowledge there is no other free-to-use pedagogical resource which employs a Tamil morphological analyser.
 
 \section{Methods}
@@ -137,7 +138,7 @@ We wanted to understand what bottlenecks users were currently facing when search
 We built a medium fidelity prototype in Figma, an interface design tool, to test our design (accessible \href{https://www.figma.com/proto/1tpcdO49QkVfDOQYSrZ5YH/Tamil-Dict-Design-updated?node-id=5-288&starting-point-node-id=5%3A288&t=XY9IO1vT16vxJg0e-1}{here}). 
 We wanted to know whether (a) users would be able to determine the meaning 
 of a word when presented with the morphological breakdown; (b) users found the morphological breakdown useful; and 
-(c) if users would use the tool if it existed.
+(c) users would use the tool if it existed.
 
 \subsection{Participants}
 To determine our design requirements, we interviewed 10 Tamil adult speakers over the age of 20
@@ -163,11 +164,11 @@ such as level of education, language of instruction, domains of use of their lan
 is important to understanding a heritage speaker’s ability in their heritage language.
 Although the answers to these questions were mostly used to corroborate the 
 responder’s self description of their Tamil abilities and not used for any formal analyses, 
-the questions themselves have been included in the Appendix for future researchers. 
-\\
+the questions themselves have been included in the Appendix for future researchers.
+% blank line for new paragraph
 Users were then asked to complete four tasks to test the usability of the prototype’s UI as well as input methods, 
 which can also be found in the appendices. 
-After completion of the tasks, users were asked the following questions:\\
+After completion of the tasks, users were asked the following questions:
 \begin{itemize}
   \item What do you like/dislike about this tool?
   \item What features do you wish existed?
@@ -193,22 +194,23 @@ adopt new technologies compared to older individuals.\\
   \includegraphics[width=\columnwidth]{graph-lookup}
   \caption{Graph of participants' methods for looking up Tamil words. Google Translate is the most common at 8 votes, while the five other remaining choices have 3 votes or less.}
   \label{fig:graph-lookup}
-  % \vspace{-4em}
+  \vspace{-0.5em}
 \end{figure}
-When asked if they would use this tool, seven participants responded with yes, two responded with no, and one with maybe.  
+
 \begin{figure}[ht]
   \includegraphics[width=\columnwidth]{graph-use-tool}
   \caption{Graph of participants' responses to if they would use a tool like the prototype. Out of 10 participants, 7 responded `yes', 1 responded `maybe', and 2 responded `no'.}
   \label{fig:graph-use-tool}
-  % \vspace{-4em}
+  \vspace{-4em}
 \end{figure}
+When asked if they would use this tool, seven participants responded with yes, two responded with no, and one with maybe.  
 SM, who is fluent with weak literacy skills, stated they would not use the tool. 
 TB, who is a beginner heritage speaker that cannot read, stated the reason behind 
 their “maybe” response was because they felt that their level of Tamil was 
 too low to use the tool, but would use it if it included more conversational words. 
 IP, who is fluent and native, felt the tool was unnecessary and that the 
 interface made it hard to correlate meaning with the word parts.
-\\
+
 Conversely, the other participants felt that the tool was quite useful. 
 In N’s case, they thought that learners would find the pedagogical 
 breakdown helpful and wished the tool existed when they were attending 
@@ -252,10 +254,10 @@ We used two open source datasets for the Tamil dictionary component, specificall
 \citet{ylonen_wiktextract_2022} and \citet{vasuki_dharma_nodate}.
 
 \subsection{Suffix Database Generation} \label{sec:suffix-db-gen}
-The suffix database queried by the system was created using Gramble. 
-Documentation for Gramble can be found \href{https://nrc-cnrc.github.io/gramble/}{here}. 
+The suffix database queried by the system was created using Gramble (documentation for Gramble can be found \href{https://nrc-cnrc.github.io/gramble/}{here}). 
 In this section we limit discussion to what tiers (that are then converted into JSON attributes) 
 we created for suffix generation and why.
+
 The primary attributes that every suffix entry in the suffix database have are 
 \textit{text, gloss, display,} and \textit{add-back}. \textit{text} is a string representing a suffix 
 as it appears in an input word, and is the attribute that the input is 
@@ -347,7 +349,6 @@ as once we confirmed that a sample few were working, we assumed others of the
 type would also be relatively high performing. Of course, formalized 
 random testing is required to verify this. A high level overview of the 
 tool’s performance on this test set is shown in Table \ref{tab:1}.
-
 \begin{table}[ht]
   \center
   \begin{tabular}{c|c|c}
@@ -396,7 +397,6 @@ and accurate lemmatization and suffix identification (shown in Table \ref{tab:co
   \caption{Kelvi performance on inputs with affixes}
   \label{tab:conjugated}
 \end{table}
-
 For inputs that produced a “word not found” error, we isolated which were 
 failing because the lemma itself was not present in our dictionary data, 
 and which were failing because our tool was not able to lemmatize the word, 
@@ -417,7 +417,6 @@ as shown in Table \ref{tab:no-result}.
   \label{tab:no-result}
   \vspace{-4em}
 \end{table}
-
 This delineation will help us isolate which types of 
 structures need to be added to our suffix database. 
 A major category of words that are currently missing is lexical compounds. 
@@ -425,10 +424,10 @@ These are words that have two lemmas, which our model does not currently account
 Some lexemes commonly used in compounds like \foreignlanguage{tamil}{போது} \textit{po:thu} (‘when’, colloquially) 
 can be added to the database as suffixes, but Tamil also has a 
 productive process of forming novel compounds\footnote{For example, the poetic word \foreignlanguage{tamil}{கண்ணுறங்கா} \textit{kaNNuRanga}: ‘(as) (my) eyes sleep’ is composed of the lemmas \foreignlanguage{tamil}{கண்} \textit{kaN} ‘eye’ and \foreignlanguage{tamil}{உறங்கு} \textit{uRangu} ‘to sleep’, neither of which can be classified as “commonly” used in compounds.}, that will require a more nuanced approach.
+
 For inputs that produced incorrect outputs, we differentiated between 
 whether the error was in the lemma, the suffix, or both (Table \ref{tab:output-incorrect}). 
 % both incorrect or else overflow ugly issue
-
 \begin{table}[ht]
   \center
   \begin{tabular}{c|c|c}
@@ -453,6 +452,7 @@ in the lemmatization process. Thus this is where the focus of our future work li
 We conducted a workshop for the launch of the MVP for Kelvi to 
 gather user feedback. We also elicited feedback through word-of-mouth, 
 and online through Reddit forums such as r/Tamil and r/LearningTamil. 
+
 The feedback received was largely positive. Users requested voice input, 
 romanization input, including example sentences in the output, and 
 providing the definition of the input word in its entirety 
@@ -476,6 +476,7 @@ Although Tamil has a relatively large speaker population, it is still considered
 low-resource language which adds a layer of difficulty when developing digital tools 
 and resources for Tamil that make use of data driven innovations in 
 computational linguistics \citep{tissera_natural_2025}.
+
 The system described in this paper serves as a starting point for 
 creating pedagogical dictionaries designed for learners of 
 polysynthetic languages and the morphological challenges they 
@@ -530,7 +531,8 @@ held belief of language purity that privileges written Tamil over spoken, inform
 Currently our team is lacking in the linguistic expertise required to adequately 
 represent all of the spoken varieties fairly, and so we seek to form collaborations 
 with speakers of different Tamil varieties to make Kelvi more inclusive in this way.
-\\While formal written Tamil does not undergo significant variation, the same is not 
+
+While formal written Tamil does not undergo significant variation, the same is not 
 true of Tamil written using romanization. There is no “standard” for romanization, 
 and so each individual uses their own conventions. We don’t want to present any 
 one romanization system as a “standard”; in the romanization shown to the user, 
@@ -548,11 +550,13 @@ this lets learners and teachers alike anticipate that there may be the occasiona
 User input is temporarily available for us to view through the web hosting service Kelvi is hosted on. 
 The input is anonymous and can’t be tracked to any individuals. We view this input 
 data solely for the purpose of bug-fixing (i.e., keeping track of any failing inputs to add to our testing process).
-\\User feedback from the initial round of user testing has been anonymized, and 
+
+User feedback from the initial round of user testing has been anonymized, and 
 none of their language data was used in the building of Kelvi or accessible to anyone outside of the team. 
 The interviews were recorded with their consent and they were informed that the recordings would only be 
 consulted for the purposes of improving the tool, and would not be shared with anyone else.
-\\Additional feedback solicited once the MVP was built was encouraged to be submitted through the 
+
+Additional feedback solicited once the MVP was built was encouraged to be submitted through the 
 anonymized feedback forms on the Kelvi website. 
 Some individuals contacted the authors directly; regardless, all feedback is kept anonymized here and in any future publications.
 

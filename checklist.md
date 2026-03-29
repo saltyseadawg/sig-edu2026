@@ -43,3 +43,8 @@ https://acl-org.github.io/ACLPUB/formatting.html#appendices
 
 ## Appendices
 - [x] Letter appendices and provide informative title
+
+
+## General APA Styling Guidelines
+- [ ] Punctuation goes outside of parantheses when ending a clause
+- [ ] Citations of several authors separated by semi-colons
