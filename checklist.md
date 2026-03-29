@@ -15,6 +15,10 @@ https://acl-org.github.io/ACLPUB/formatting.html#appendices
   - pdfinfo mypaper.pdf (should be 595.276 x 841.89 pts)
 
 ## Paper Format
+
+### Title and Authors
+- [ ] Title is in title case.
+
 ### Layout
 - [ ] All text (except pg numbers) must fit within margins
 - [x] Pages are numbered **in review version**
