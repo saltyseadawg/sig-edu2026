@@ -17,10 +17,10 @@ https://acl-org.github.io/ACLPUB/formatting.html#appendices
 ## Paper Format
 
 ### Title and Authors
-- [ ] Title is in title case.
+- [x] Title is in title case.
 
 ### Layout
-- [ ] All text (except pg numbers) must fit within margins
+- [x] All text (except pg numbers) must fit within margins
 - [x] Pages are numbered **in review version**
 ### Abstract
 - [x] Abstract is max 200 words
